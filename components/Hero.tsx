@@ -21,15 +21,16 @@ const Hero = ({}: HeroProps) => {
             Hi, I'm <span className="text-[#915EFF]">Zihang</span>
           </h1>
           <p className={`heroSubText mt-2 text-white-100`}>
-            I develop 3D visuals, user <br className="sm:block hidden" />
-            interfaces and web applications
+            {/* I develop 3D visuals, user <br className="sm:block hidden" />
+            interfaces and web applications */}
+            I develop scalable, high-performance web applications with modular, maintainable frontend architectures.
           </p>
         </div>
       </div>
 
       {/* <ComputersCanvas /> */}
       <div
-        className="h-1/3 md:h-1/2 lg:[@media_(max-height:820px)]:h-full lg:h-1/2 xl:h-full
+        className="h-2/5 md:h-1/2 lg:[@media_(max-height:820px)]:h-full lg:h-1/2 xl:h-full
         top-1/4 md:top-1/8 lg:[@media_(max-height:820px)]:top-auto lg:top-1/12 xl:top-auto 
         md:bottom-0
         absolute  w-full"

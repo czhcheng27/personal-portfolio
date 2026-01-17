@@ -30,8 +30,8 @@ const Navbar = ({}: NavbarProps) => {
 
   return (
     <nav
-      className={`paddingX w-full flex items-center py-5 fixed top-0 z-20 ${
-        scrolled ? "bg-primary" : "bg-transparent"
+      className={`paddingX w-full flex items-center py-5 fixed top-0 z-50 bg-primary ${
+        scrolled ? "shadow-lg" : ""
       }`}
     >
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">

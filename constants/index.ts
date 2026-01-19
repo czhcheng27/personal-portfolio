@@ -128,31 +128,36 @@ export type ExpCard = {
 
 const expCards: ExpCard[] = [
   {
-    review1: "This experience significantly advanced expertise in responsive layout, performance optimization, and SEO on ToC-facing applications.",
-    review2: "It also deepened understanding of system architecture through routing design, role-based permissions, and access management.",
+    review1:
+      "This experience significantly advanced expertise in responsive layout, performance optimization, and SEO on ToC-facing applications.",
+    review2:
+      "It also deepened understanding of system architecture through routing design, role-based permissions, and access management.",
     imgPath: "/assets/company/exp1.png",
     logoPath: "/assets/company/logo1.png",
     title: "Frontend Developer",
     date: "June 2025 - Present",
     responsibilities: [
-      "Independently refactored the company’s public website and subdomains, implementing fully responsive layouts and optimizing performance, reducing page load time from 3.5s to 70ms (≈80% improvement).",
+      "Independently refactored the company's public website and subdomains, implementing fully responsive layouts and optimizing performance, reducing page load time from 3.5s to 70ms (≈80% improvement).",
       "Processed long-form videos into segments and integrated CloudFront CDN acceleration, significantly improving playback performance and eliminating loading lag.",
       "Rebuilt internal B2B systems including user management, role-based permissions, button-level access control, and route guards, enhancing security, maintainability, and workflow efficiency.",
     ],
   },
   {
-    review1:"During this period, the role evolved from individual contributor to frontend team lead, guiding the team through complex projects while expanding both the breadth and depth of technical expertise.",
-    review2: "This transition fostered a stronger focus on solving challenging technical problems, with increased attention to architecture, design, and system-level thinking.",
-    review3: "Emphasis was placed on writing maintainable, scalable, and readable code, ensuring high quality and long-term extensibility across projects.",
+    review1:
+      "During this period, the role evolved from individual contributor to frontend team lead, guiding the team through complex projects while expanding both the breadth and depth of technical expertise.",
+    review2:
+      "This transition fostered a stronger focus on solving challenging technical problems, with increased attention to architecture, design, and system-level thinking.",
+    review3:
+      "Emphasis was placed on writing maintainable, scalable, and readable code, ensuring high quality and long-term extensibility across projects.",
     imgPath: "/assets/company/exp2.png",
     logoPath: "/assets/company/logo2.png",
     title: "Frontend Developer",
-    date: "February 2022 - January 2025",
+    date: "December 2021 - November 2024",
     responsibilities: [
       "Developed a configurable advanced search module with dynamic AND/OR filters and field-specific match types, enabling scalable future expansion and reducing integration time by 80%.",
       "Built a modular drag-and-drop editor for structured documents using Redux and DnD, supporting tables, images, formulas, validation, and dynamic clause numbering—commercialized as the first of its kind in China.",
       "Created a unified chart configuration system with ECharts, HighCharts, and Three.js, reducing development time by 40% through reusable, standardized visual components.",
-      "Refactored and encapsulated UI components and icon/font libraries into a reusable system, standardizing design and reducing code duplication across multiple projects"
+      "Refactored and encapsulated UI components and icon/font libraries into a reusable system, standardizing design and reducing code duplication across multiple projects",
     ],
   },
   {
@@ -169,6 +174,47 @@ const expCards: ExpCard[] = [
     ],
   },
 ];
+
+const techStackIcons = [
+  {
+    name: "React",
+    modelPath: "/models/react_logo-transformed.glb",
+    scale: 1,
+    rotation: [0, 0, 0],
+  },
+  {
+    name: "Tailwind",
+    modelPath: "/models/tailwind.glb",
+    scale: 1.5,
+    rotation: [0, 0, 0],
+  },
+  {
+    name: "Typescript",
+    modelPath: "/models/ts.glb",
+    scale: 1.5,
+    rotation: [0, 0, 0],
+  },
+  {
+    name: "Javascript",
+    modelPath: "/models/node-transformed.glb",
+    scale: 5,
+    rotation: [0, -Math.PI / 2, 0],
+  },
+  {
+    name: "Threejs",
+    modelPath: "/models/three.js-transformed.glb",
+    scale: 0.05,
+    rotation: [0, 0, 0],
+  },
+  {
+    name: "Git",
+    modelPath: "/models/git-svg-transformed.glb",
+    scale: 0.05,
+    rotation: [0, -Math.PI / 4, 0],
+  },
+] as const;
+
+export type TechIcon = (typeof techStackIcons)[number];
 
 const testimonials = [
   {
@@ -263,4 +309,11 @@ const projects = [
   },
 ];
 
-export { services, technologies, expCards, testimonials, projects };
+export {
+  services,
+  technologies,
+  expCards,
+  techStackIcons,
+  testimonials,
+  projects,
+};

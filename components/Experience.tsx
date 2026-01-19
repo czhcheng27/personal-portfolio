@@ -125,7 +125,7 @@ const Experience = () => {
       id="experience"
       className="mx-auto max-w-8xl flex-center md:mt-40 mt-20 section-padding xl:px-0"
     >
-      <div className="w-full h-full md:px-20 px-5">
+      <div className="w-full h-full px-5">
         <div className="mt-32 relative">
           <div className="relative z-10 xl:space-y-32 space-y-10">
             {expCards.map((card, idx) => (

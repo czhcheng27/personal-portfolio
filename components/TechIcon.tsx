@@ -51,17 +51,13 @@ const Model = ({ model }: TechIconProps) => {
 const TechIcon = ({ model }: TechIconProps) => {
   return (
     <Canvas
-      frameloop="demand"
+      frameloop="always"
       dpr={[1, 1.5]}
       gl={{
         antialias: true,
         powerPreference: "low-power",
         // Prevent context loss by limiting resources
         preserveDrawingBuffer: false,
-      }}
-      onCreated={({ gl }) => {
-        // Limit texture memory
-        gl.capabilities.maxTextures = Math.min(gl.capabilities.maxTextures, 8);
       }}
     >
       <Suspense fallback={null}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { Environment, Float, OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
@@ -10,57 +10,75 @@ interface TechIconProps {
   model: TechIcon;
 }
 
-const TechIcon = ({ model }: TechIconProps) => {
-  const scene = useGLTF(model.modelPath);
+// Separate component for the 3D model - must be inside Canvas
+const Model = ({ model }: TechIconProps) => {
+  const { scene } = useGLTF(model.modelPath);
+  const groupRef = useRef<THREE.Group>(null);
+
+  // Create a stable clone of the scene that won't change on re-renders
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone(true);
+    // Deep clone materials to avoid sharing issues
+    clone.traverse((child) => {
+      if (child instanceof THREE.Mesh && child.material) {
+        child.material = Array.isArray(child.material)
+          ? child.material.map((m) => m.clone())
+          : child.material.clone();
+      }
+    });
+    return clone;
+  }, [scene]);
 
   useEffect(() => {
-    if (model.name === "Threejs") {
-      scene.scene.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-          if (child.name === "Object_5") {
-            child.material = new THREE.MeshStandardMaterial({ color: "white" });
-          }
+    if (model.name === "Threejs" && groupRef.current) {
+      groupRef.current.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.name === "Object_5") {
+          child.material = new THREE.MeshStandardMaterial({ color: "white" });
         }
       });
     }
-  }, [scene, model.name]);
+  }, [model.name, clonedScene]);
 
   return (
-    <Canvas>
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[5, 5, 5]} intensity={1} />
-      <spotLight
-        position={[10, 15, 10]}
-        angle={0.3}
-        penumbra={1}
-        intensity={2}
-      />
-      <Environment preset="city" />
+    <Float speed={5.5} rotationIntensity={0.5} floatIntensity={0.9}>
+      <group ref={groupRef} scale={model.scale} rotation={model.rotation}>
+        <primitive object={clonedScene} />
+      </group>
+    </Float>
+  );
+};
 
-      {/* 
-        The Float component from @react-three/drei is used to 
-        create a simple animation of the model floating in space.
-        The rotationIntensity and floatIntensity props control the
-        speed of the rotation and float animations respectively.
+const TechIcon = ({ model }: TechIconProps) => {
+  return (
+    <Canvas
+      frameloop="demand"
+      dpr={[1, 1.5]}
+      gl={{
+        antialias: true,
+        powerPreference: "low-power",
+        // Prevent context loss by limiting resources
+        preserveDrawingBuffer: false,
+      }}
+      onCreated={({ gl }) => {
+        // Limit texture memory
+        gl.capabilities.maxTextures = Math.min(gl.capabilities.maxTextures, 8);
+      }}
+    >
+      <Suspense fallback={null}>
+        <ambientLight intensity={0.3} />
+        <directionalLight position={[5, 5, 5]} intensity={1} />
+        <spotLight
+          position={[10, 15, 10]}
+          angle={0.3}
+          penumbra={1}
+          intensity={2}
+        />
+        <Environment preset="city" />
 
-        The group component is used to scale and rotate the model.
-        The rotation is set to the value of the model.rotation property,
-        which is an array of three values representing the rotation in
-        degrees around the x, y and z axes respectively.
+        <Model model={model} />
 
-        The primitive component is used to render the 3D model.
-        The object prop is set to the scene object returned by the
-        useGLTF hook, which is an instance of THREE.Group. The
-        THREE.Group object contains all the objects (meshes, lights, etc)
-        that make up the 3D model.
-      */}
-      <Float speed={5.5} rotationIntensity={0.5} floatIntensity={0.9}>
-        <group scale={model.scale} rotation={model.rotation}>
-          <primitive object={scene.scene} />
-        </group>
-      </Float>
-
-      <OrbitControls enableZoom={false} enablePan={false} />
+        <OrbitControls enableZoom={false} enablePan={false} />
+      </Suspense>
     </Canvas>
   );
 };

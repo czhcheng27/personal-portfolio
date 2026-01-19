@@ -1,7 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import Computer from "./Computer";
+
+// Dynamically import Computer with SSR disabled to prevent server-side rendering issues
+// useGLTF cannot parse relative URLs during SSR/prerendering
+const Computer = dynamic(() => import("./Computer"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="w-16 h-16 rounded-full border-4 border-white-50 border-t-transparent animate-spin" />
+    </div>
+  ),
+});
 
 interface HeroProps {}
 
@@ -23,7 +34,8 @@ const Hero = ({}: HeroProps) => {
           <p className={`heroSubText mt-2 text-white-100`}>
             {/* I develop 3D visuals, user <br className="sm:block hidden" />
             interfaces and web applications */}
-            I develop scalable, high-performance web applications with modular, maintainable frontend architectures.
+            I develop scalable, high-performance web applications with modular,
+            maintainable frontend architectures.
           </p>
         </div>
       </div>

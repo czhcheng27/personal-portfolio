@@ -1,11 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { techStackIcons } from "@/constants";
-import TechIcon from "./TechIcon";
+
+// Dynamically import TechIcon with SSR disabled to prevent server-side rendering issues
+// useGLTF cannot parse relative URLs during SSR/prerendering
+const TechIcon = dynamic(() => import("./TechIcon"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="w-10 h-10 rounded-full border-2 border-white-50 border-t-transparent animate-spin" />
+    </div>
+  ),
+});
 
 // Register the ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -14,10 +25,21 @@ interface TechStackProps {}
 
 const TechStack = ({}: TechStackProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isReady, setIsReady] = useState(false);
+
+  // Wait for client-side hydration before enabling animations
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
 
   // Animate the tech cards in the skills section
   useGSAP(
     () => {
+      if (!isReady) return;
+
+      // Clear any existing inline styles first
+      gsap.set(".tech-card", { clearProps: "all" });
+
       // This animation is triggered when the user scrolls to the #skills wrapper
       // The animation starts when the top of the wrapper is at the center of the screen
       // The animation is staggered, meaning each card will animate in sequence
@@ -42,20 +64,12 @@ const TechStack = ({}: TechStackProps) => {
           },
         },
       );
-    },
-    { scope: containerRef },
-  );
 
-  // Refresh ScrollTrigger after the Canvas components are mounted
-  // This fixes the issue where icons don't show on large screens (>1280px) after refresh
-  useEffect(() => {
-    // Give Three.js Canvas time to fully initialize
-    const timer = setTimeout(() => {
+      // Refresh ScrollTrigger after animation setup
       ScrollTrigger.refresh();
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
+    },
+    { scope: containerRef, dependencies: [isReady] },
+  );
 
   return (
     <div

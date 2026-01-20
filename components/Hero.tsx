@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import TextReveal from "./TextReveal";
 
 // Dynamically import Computer with SSR disabled to prevent server-side rendering issues
 // useGLTF cannot parse relative URLs during SSR/prerendering
@@ -14,9 +15,9 @@ const Computer = dynamic(() => import("./Computer"), {
   ),
 });
 
-interface HeroProps {}
+interface HeroProps { }
 
-const Hero = ({}: HeroProps) => {
+const Hero = ({ }: HeroProps) => {
   return (
     <section className={`relative w-full h-200 md:h-screen mx-auto`}>
       <div
@@ -28,14 +29,14 @@ const Hero = ({}: HeroProps) => {
         </div>
 
         <div>
-          <h1 className={`heroHeadText text-white`}>
+          <TextReveal className="heroHeadText text-white">
             Hi, I'm <span className="text-[#915EFF]">Zihang</span>
-          </h1>
+          </TextReveal>
           <p className={`heroSubText mt-2 text-white-100`}>
-            {/* I develop 3D visuals, user <br className="sm:block hidden" />
-            interfaces and web applications */}
-            I develop scalable, high-performance web applications with modular,
-            maintainable frontend architectures.
+            <TextReveal>
+              I develop scalable, high-performance web applications with modular,
+              maintainable frontend architectures.
+            </TextReveal>
           </p>
         </div>
       </div>

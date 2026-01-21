@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import TextReveal from "../TextReveal/TextReveal";
 import styles from "./Hero.module.css";
@@ -18,6 +19,16 @@ const Computer = dynamic(() => import("../Computer"), {
 interface HeroProps { }
 
 const Hero = ({ }: HeroProps) => {
+  const [readyToLoadModel, setReadyToLoadModel] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setReadyToLoadModel(true);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className={`relative w-full h-200 md:h-screen mx-auto`}>
       <div
@@ -56,7 +67,7 @@ const Hero = ({ }: HeroProps) => {
         md:bottom-0
         absolute w-full`}
       >
-        <Computer />
+        {readyToLoadModel && <Computer />}
       </div>
 
       <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center">

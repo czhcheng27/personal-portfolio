@@ -95,7 +95,7 @@ const Experience = () => {
       const dist = startTrigger - containerRect.top;
       const totalDist = containerRect.height;
 
-      let progress = Math.max(0, Math.min(1, dist / totalDist));
+      const progress = Math.max(0, Math.min(1, dist / totalDist));
 
       const percent = progress * 100;
       const mask = `linear-gradient(to bottom, black 0%, black ${percent - 5}%, transparent ${percent}%)`;

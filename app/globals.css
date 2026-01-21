@@ -39,6 +39,107 @@
     font-family: "Poppins", sans-serif;
     background: #171717;
     color: #ffffff;
+    /* 性能优化：启用硬件加速 */
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* 优化动画性能 */
+  [data-motion] {
+    will-change: transform, opacity;
+  }
+
+  /* 动画结束后移除 will-change */
+  [data-motion-complete] {
+    will-change: auto;
+  }
+}
+
+/* Navbar CSS Animations */
+
+/* --- Desktop Animation (md: 768px and up) --- */
+@media (min-width: 768px) {
+
+  /* 1. Logo Group: Fades in centered, waits, then slides left */
+  .navbar-slide-in {
+    animation: logoCenterToLeft 1.2s cubic-bezier(0.25, 0.4, 0.25, 1) both;
+  }
+
+  /* 2. Title Group: Waits 0.6s, then fades in sliding from left */
+  .navbar-fade-in {
+    animation: titleReveal 1.2s cubic-bezier(0.25, 0.4, 0.25, 1) both;
+  }
+}
+
+/* --- Mobile Animation (Below 768px) --- */
+@media (max-width: 767px) {
+
+  /* Parent container: No movement, just visible */
+  .navbar-slide-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Name text: Slides out from left (behind logo) to right */
+  .logo-text {
+    animation: logoNameSlideRight 0.8s cubic-bezier(0.25, 0.4, 0.25, 1) both;
+  }
+}
+
+/* Keyframes Definitions */
+
+/* Desktop: Logo moves from Center (80px) to Left (0px) */
+@keyframes logoCenterToLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(80px);
+    /* Start centered */
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateX(80px);
+    /* Fade in done, still centered */
+  }
+
+  50% {
+    transform: translateX(80px);
+    /* Wait for a moment */
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    /* Slide to left */
+  }
+}
+
+/* Desktop: Title fades in */
+@keyframes titleReveal {
+
+  0%,
+  50% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Mobile: Name slides from left to right */
+@keyframes logoNameSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -46,9 +147,11 @@
   .paddingX {
     @apply sm:px-16 px-6;
   }
+
   .paddingY {
     @apply sm:py-16 py-6;
   }
+
   .padding {
     @apply sm:px-16 px-6 sm:py-16 py-10;
   }
@@ -89,12 +192,10 @@
     @apply absolute z-18 h-[110%] -top-10 w-1;
     transform-origin: bottom bottom;
     /* 从顶部纯色渐变到底部透明，形成流星尾巴收束效果 */
-    background: linear-gradient(
-      to top,
-      var(--color-primary) 0%,
-      var(--color-primary) 85%,
-      transparent 100%
-    );
+    background: linear-gradient(to top,
+        var(--color-primary) 0%,
+        var(--color-primary) 85%,
+        transparent 100%);
   }
 
   .timeline-logo {
@@ -131,6 +232,7 @@
   .max-w-8xl {
     max-width: 1536px;
   }
+
   .max-w-9xl {
     max-width: 1920px;
   }
@@ -143,27 +245,24 @@
 }
 
 .black-gradient {
-  background: #000000; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #000000;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right,
+      #434343,
+      #000000);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right,
+      #434343,
+      #000000);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .violet-gradient {
   background: #804dee;
   background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
-  background: -webkit-linear-gradient(
-    -90deg,
-    #804dee 0%,
-    rgba(60, 51, 80, 0) 100%
-  );
+  background: -webkit-linear-gradient(-90deg,
+      #804dee 0%,
+      rgba(60, 51, 80, 0) 100%);
 }
 
 .green-pink-gradient {
@@ -173,66 +272,62 @@
 }
 
 .orange-text-gradient {
-  background: #f12711; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #f12711,
-    #f5af19
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #f12711,
-    #f5af19
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #f12711;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top,
+      #f12711,
+      #f5af19);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top,
+      #f12711,
+      #f5af19);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .green-text-gradient {
-  background: #11998e; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #11998e,
-    #38ef7d
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #11998e,
-    #38ef7d
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #11998e;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top,
+      #11998e,
+      #38ef7d);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top,
+      #11998e,
+      #38ef7d);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .blue-text-gradient {
   /* background: -webkit-linear-gradient(#eee, #333); */
-  background: #56ccf2; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #2f80ed,
-    #56ccf2
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #2f80ed,
-    #56ccf2
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #56ccf2;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top,
+      #2f80ed,
+      #56ccf2);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top,
+      #2f80ed,
+      #56ccf2);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .pink-text-gradient {
-  background: #ec008c; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to top,
-    #ec008c,
-    #fc6767
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to top,
-    #ec008c,
-    #fc6767
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #ec008c;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top,
+      #ec008c,
+      #fc6767);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top,
+      #ec008c,
+      #fc6767);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -250,6 +345,7 @@
 }
 
 @keyframes mulShdSpin {
+
   0%,
   100% {
     box-shadow:
@@ -262,6 +358,7 @@
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.5),
       -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.7);
   }
+
   12.5% {
     box-shadow:
       0em -2.6em 0em 0em rgba(255, 255, 255, 0.7),
@@ -273,6 +370,7 @@
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
       -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.5);
   }
+
   25% {
     box-shadow:
       0em -2.6em 0em 0em rgba(255, 255, 255, 0.5),
@@ -284,6 +382,7 @@
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
       -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
   }
+
   37.5% {
     box-shadow:
       0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
@@ -295,6 +394,7 @@
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
       -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
   }
+
   50% {
     box-shadow:
       0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
@@ -306,6 +406,7 @@
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
       -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
   }
+
   62.5% {
     box-shadow:
       0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
@@ -317,6 +418,7 @@
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.2),
       -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
   }
+
   75% {
     box-shadow:
       0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
@@ -328,6 +430,7 @@
       -2.6em 0em 0 0em #ffffff,
       -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
   }
+
   87.5% {
     box-shadow:
       0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
@@ -345,32 +448,27 @@
   position: absolute;
   z-index: 10;
   width: 2px;
-  background: linear-gradient(
-    0deg,
-    rgba(69, 222, 196, 0) 0%,
-    #6d45ce 25%,
-    #62e0ff 37.51%,
-    #52aeff 62.83%,
-    #fd5c79 92.91%
-  );
+  background: linear-gradient(0deg,
+      rgba(69, 222, 196, 0) 0%,
+      #6d45ce 25%,
+      #62e0ff 37.51%,
+      #52aeff 62.83%,
+      #fd5c79 92.91%);
 }
 
 .gradient-edge:nth-of-type(1) {
   left: 0;
   background: rgb(0, 0, 0);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(255, 255, 255, 0) 100%);
 }
+
 .gradient-edge:nth-of-type(2) {
   right: 0;
-  background: linear-gradient(
-    -90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(-90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(255, 255, 255, 0) 100%);
 }
 
 .card {
@@ -395,12 +493,10 @@
   background-attachment: fixed;
   mask:
     linear-gradient(#0000, #0000),
-    conic-gradient(
-      from calc((var(--start) - 15) * 1deg),
+    conic-gradient(from calc((var(--start) - 15) * 1deg),
       #ffffff1f 0deg,
       white,
-      #ffffff00 100deg
-    );
+      #ffffff00 100deg);
   mask-composite: intersect;
   mask-clip: padding-box, border-box;
   opacity: 0;

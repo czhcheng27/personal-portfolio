@@ -1,0 +1,34 @@
+/* Hero component animations - pure CSS for maximum performance */
+
+.fadeIn {
+    animation: heroFadeIn 0.8s ease-out forwards;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Bouncing scroll indicator - replaces framer-motion animation */
+.bounce {
+    animation: bounceY 1.5s ease-in-out infinite;
+}
+
+@keyframes bounceY {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(24px);
+    }
+}

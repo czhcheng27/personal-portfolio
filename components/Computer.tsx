@@ -4,7 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import CanvasLoader from "./Loader";
 
-interface ComputersCanvasProps {}
+interface ComputersCanvasProps { }
 
 const Computers = () => {
   // load from public folder via absolute path
@@ -64,7 +64,7 @@ const Computers = () => {
   );
 };
 
-const ComputersCanvas = ({}: ComputersCanvasProps) => {
+const ComputersCanvas = ({ }: ComputersCanvasProps) => {
   return (
     <Canvas
       frameloop="always"

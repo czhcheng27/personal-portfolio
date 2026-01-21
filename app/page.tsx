@@ -1,7 +1,18 @@
-import Hero from "@/components/Hero";
+import dynamic from "next/dynamic";
+import Hero from "@/components/Hero/Hero";
 import Navbar from "@/components/Navbar";
-import Experience from "@/components/Experience";
-import TechStack from "@/components/TechStack";
+import LazyLoadSection from "@/components/LazyLoadSection";
+
+// 懒加载非首屏组件，减少首屏负载
+const Experience = dynamic(() => import("@/components/Experience"), {
+  ssr: true,
+  loading: () => <div className="min-h-screen" />,
+});
+
+const TechStack = dynamic(() => import("@/components/TechStack"), {
+  ssr: true,
+  loading: () => <div className="min-h-screen" />,
+});
 
 export default function Home() {
   return (
@@ -10,8 +21,12 @@ export default function Home() {
         <Navbar />
         <Hero />
       </div>
-      <Experience />
-      <TechStack />
+      <LazyLoadSection>
+        <Experience />
+      </LazyLoadSection>
+      <LazyLoadSection>
+        <TechStack />
+      </LazyLoadSection>
     </div>
   );
 }

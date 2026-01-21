@@ -122,7 +122,7 @@ const Experience = () => {
           {/* 全局连续时间线 */}
           <div className="global-timeline-container absolute top-0 xl:left-1/2 md:left-10 left-5 h-full flex justify-center z-0">
             {/* 背景暗线 */}
-            <div className="w-1 h-full bg-[#050816]" />
+            <div className="w-1 h-full bg-primary" />
 
             {/* 彩管渐变线 - 覆盖在上面 */}
             <div
@@ -156,7 +156,7 @@ const Experience = () => {
                   <div className="flex items-start">
                     <div className="expText flex xl:gap-20 md:gap-10 gap-5 relative z-22">
                       <div
-                        className="timeline-logo md:border-[var(--logo-border)]"
+                        className="timeline-logo md:border-(--logo-border)"
                         style={{ "--logo-border": card.borderColor } as React.CSSProperties}
                       >
                         <Image src={card.logoPath} alt="logo" width={50} height={50} />

@@ -199,7 +199,7 @@
   }
 
   .tech-card-animated-bg {
-    @apply absolute left-0 bottom-[-100%] w-full h-full bg-[#2D3240] group-hover:bottom-0 transition-all duration-700;
+    @apply absolute left-0 -bottom-full w-full h-full bg-[#2D3240] group-hover:bottom-0 transition-all duration-700;
   }
 
   .tech-card-content {

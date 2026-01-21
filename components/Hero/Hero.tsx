@@ -16,7 +16,7 @@ const Computer = dynamic(() => import("../Computer"), {
   ),
 });
 
-interface HeroProps { }
+type HeroProps = object
 
 const Hero = ({ }: HeroProps) => {
   const [readyToLoadModel, setReadyToLoadModel] = useState(false);
@@ -46,7 +46,7 @@ const Hero = ({ }: HeroProps) => {
             durationMs={450}
             initialDelayMs={100}
           >
-            Hi, I'm <span className="text-[#915EFF]">Zihang</span>
+            Hi, I&apos;m <span className="text-[#915EFF]">Zihang</span>
           </TextReveal>
           <div className={`heroSubText mt-2 text-white-100`}>
             <TextReveal

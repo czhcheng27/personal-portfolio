@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -21,22 +21,14 @@ const TechIcon = dynamic(() => import("./TechIcon"), {
 // Register the ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-interface TechStackProps {}
+type TechStackProps = object
 
-const TechStack = ({}: TechStackProps) => {
+const TechStack = ({ }: TechStackProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isReady, setIsReady] = useState(false);
-
-  // Wait for client-side hydration before enabling animations
-  useEffect(() => {
-    setIsReady(true);
-  }, []);
 
   // Animate the tech cards in the skills section
   useGSAP(
     () => {
-      if (!isReady) return;
-
       // Clear any existing inline styles first
       gsap.set(".tech-card", { clearProps: "all" });
 
@@ -68,7 +60,7 @@ const TechStack = ({}: TechStackProps) => {
       // Refresh ScrollTrigger after animation setup
       ScrollTrigger.refresh();
     },
-    { scope: containerRef, dependencies: [isReady] },
+    { scope: containerRef, dependencies: [] },
   );
 
   return (

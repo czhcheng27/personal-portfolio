@@ -1,0 +1,60 @@
+@reference "../../app/globals.css";
+
+.ctaWrapper {
+  @apply relative z-20 cursor-pointer inline-block;
+}
+
+.ctaButton {
+  @apply px-4 py-4 rounded-lg bg-black-200 flex justify-center items-center relative cursor-pointer overflow-hidden;
+}
+
+.bgCircle {
+  @apply absolute -right-10 origin-center top-1/2 -translate-y-1/2 
+    w-[120%] h-[120%] rounded-full bg-white-50 transition-all duration-500;
+}
+
+.text {
+  @apply uppercase md:text-lg text-black transition-all duration-500
+    -translate-x-5;
+  z-index: 10;
+}
+
+@media (min-width: 1280px) {
+  .text {
+    @apply translate-x-0;
+  }
+}
+
+.arrowWrapper {
+  @apply size-10 rounded-full absolute right-10 top-1/2 
+    -translate-y-1/2 flex justify-center items-center overflow-hidden;
+  z-index: 10;
+}
+
+/* Base state for the image icon */
+.arrowWrapper img {
+  @apply size-5 translate-y-0 animate-bounce transition-all duration-500;
+}
+
+@media (min-width: 1280px) {
+  .arrowWrapper img {
+    @apply -translate-y-32;
+  }
+}
+
+/* Hover effects */
+.ctaButton:hover .bgCircle {
+  @apply size-10 right-10;
+}
+
+.ctaButton:hover .text {
+  @apply text-white-50 -translate-x-5;
+}
+
+.ctaButton:hover .arrowWrapper {
+  @apply bg-white-50;
+}
+
+.ctaButton:hover .arrowWrapper img {
+  @apply translate-y-0;
+}

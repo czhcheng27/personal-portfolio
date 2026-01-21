@@ -177,7 +177,7 @@
   }
 
   .exp-card-wrapper {
-    @apply flex flex-col-reverse xl:flex-row xl:gap-20 gap-10 justify-between;
+    @apply flex flex-col-reverse xl:flex-row xl:gap-20 gap-10 justify-between relative;
   }
 
   .card-border {
@@ -446,14 +446,13 @@
 
 .gradient-line {
   position: absolute;
-  z-index: 10;
+  z-index: 30;
   width: 2px;
   background: linear-gradient(0deg,
-      rgba(69, 222, 196, 0) 0%,
-      #6d45ce 25%,
-      #62e0ff 37.51%,
+      #8d68e6 0%,
+      #6d45ce 10%,
       #52aeff 62.83%,
-      #fd5c79 92.91%);
+      #fd5c79 73%);
 }
 
 .gradient-edge:nth-of-type(1) {

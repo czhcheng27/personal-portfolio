@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,6 +12,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Experience = () => {
   const containerRef = useRef<HTMLElement>(null);
+  const globalLineRef = useRef<HTMLDivElement>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -41,55 +43,6 @@ const Experience = () => {
         });
       });
 
-      // 彩色渐变线渐渐淡入出现（跟 expText 一样的效果）
-      gsap.from(".gradient-line", {
-        opacity: 0,
-        duration: 1,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          trigger: ".gradient-line",
-          start: "top 90%",
-        },
-      });
-
-      // 使用 GSAP matchMedia 处理响应式断点
-      ScrollTrigger.matchMedia({
-        // 移动端 (< 768px)
-        "(max-width: 767px)": function () {
-          gsap.to(".timeline", {
-            transformOrigin: "bottom bottom",
-            ease: "power1.inOut",
-            scrollTrigger: {
-              trigger: ".timeline",
-              start: "top 70%", // 移动端：到达视口中部时开始
-              end: "70% 40%",
-              onUpdate: (self) => {
-                gsap.to(".timeline", {
-                  scaleY: 1 - self.progress,
-                });
-              },
-            },
-          });
-        },
-        // 桌面端 (>= 768px)
-        "(min-width: 768px)": function () {
-          gsap.to(".timeline", {
-            transformOrigin: "bottom bottom",
-            ease: "power1.inOut",
-            scrollTrigger: {
-              trigger: ".timeline",
-              start: "top 90%", // 桌面端：到达视口底部 10% 时开始
-              end: "70% 50%",
-              onUpdate: (self) => {
-                gsap.to(".timeline", {
-                  scaleY: 1 - self.progress,
-                });
-              },
-            },
-          });
-        },
-      });
-
       // Loop through each expText element and animate them in
       // as the user scrolls to each text element
       gsap.utils.toArray(".expText").forEach((text) => {
@@ -115,9 +68,48 @@ const Experience = () => {
           },
         });
       }, "<"); // position parameter - insert at the start of the animation
+
+      // 3. 全局时间线淡入动画
+      gsap.from(".global-timeline-container", {
+        opacity: 0,
+        duration: 1,
+        ease: "power2.inOut",
+        scrollTrigger: {
+          trigger: ".global-timeline-container",
+          start: "top 90%", // 当线容器顶部到达 90% 处开始淡入
+        },
+      });
     },
     { scope: containerRef }
   );
+
+  // 终极方案：原生 JS 滚动监听
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!globalLineRef.current || !cardsContainerRef.current) return;
+
+      const containerRect = cardsContainerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      const startTrigger = viewportHeight * 0.90;
+      const dist = startTrigger - containerRect.top;
+      const totalDist = containerRect.height;
+
+      let progress = Math.max(0, Math.min(1, dist / totalDist));
+
+      const percent = progress * 100;
+      const mask = `linear-gradient(to bottom, black 0%, black ${percent - 5}%, transparent ${percent}%)`;
+      globalLineRef.current.style.maskImage = mask;
+      globalLineRef.current.style.webkitMaskImage = mask;
+    };
+
+    // 监听滚动
+    window.addEventListener("scroll", handleScroll);
+    // 初始化调用一次
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section
@@ -127,10 +119,29 @@ const Experience = () => {
     >
       <div className="w-full h-full px-5">
         <div className="mt-32 relative">
-          <div className="relative z-10 xl:space-y-32 space-y-10">
+          {/* 全局连续时间线 */}
+          <div className="global-timeline-container absolute top-0 xl:left-1/2 md:left-10 left-5 h-full flex justify-center z-0">
+            {/* 背景暗线 */}
+            <div className="w-1 h-full bg-[#050816]" />
+
+            {/* 彩管渐变线 - 覆盖在上面 */}
+            <div
+              ref={globalLineRef}
+              className="gradient-line w-1 h-full absolute top-0 left-0"
+              style={{ maskImage: "linear-gradient(to bottom, black 0%, transparent 0%)", WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 0%)" }}
+            />
+          </div>
+
+          <div
+            ref={cardsContainerRef}
+            className="relative z-10 xl:space-y-32 space-y-10"
+          >
             {expCards.map((card, idx) => (
-              <div key={idx} className="exp-card-wrapper">
-                <div className="hidden xl:block xl:w-2/5">
+              <div
+                key={idx}
+                className="exp-card-wrapper"
+              >
+                <div className="hidden xl:block xl:w-2/5 timeline-card">
                   <GlowCard card={card}>
                     <Image
                       src={card.imgPath}
@@ -143,12 +154,11 @@ const Experience = () => {
 
                 <div className="xl:w-[calc(50%+40px)]">
                   <div className="flex items-start">
-                    <div className="timeline-wrapper">
-                      <div className="timeline" />
-                      <div className="gradient-line w-1 h-full" />
-                    </div>
                     <div className="expText flex xl:gap-20 md:gap-10 gap-5 relative z-22">
-                      <div className="timeline-logo">
+                      <div
+                        className="timeline-logo md:border-[var(--logo-border)]"
+                        style={{ "--logo-border": card.borderColor } as React.CSSProperties}
+                      >
                         <Image src={card.logoPath} alt="logo" width={50} height={50} />
                       </div>
                       <div>
@@ -157,7 +167,7 @@ const Experience = () => {
                           🗓️&nbsp;{card.date}
                         </p>
                         <p className="text-[#839CB5] italic">
-                        Key Achievements
+                          Key Achievements
                         </p>
                         <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 text-white-50">
                           {card.responsibilities.map(

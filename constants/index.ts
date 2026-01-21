@@ -124,6 +124,7 @@ export type ExpCard = {
   title: string;
   date: string;
   responsibilities: string[];
+  borderColor?: string;
 };
 
 const expCards: ExpCard[] = [
@@ -141,6 +142,7 @@ const expCards: ExpCard[] = [
       "Processed long-form videos into segments and integrated CloudFront CDN acceleration, significantly improving playback performance and eliminating loading lag.",
       "Rebuilt internal B2B systems including user management, role-based permissions, button-level access control, and route guards, enhancing security, maintainability, and workflow efficiency.",
     ],
+    borderColor: "#fd5c79",
   },
   {
     review1:
@@ -159,6 +161,7 @@ const expCards: ExpCard[] = [
       "Created a unified chart configuration system with ECharts, HighCharts, and Three.js, reducing development time by 40% through reusable, standardized visual components.",
       "Refactored and encapsulated UI components and icon/font libraries into a reusable system, standardizing design and reducing code duplication across multiple projects",
     ],
+    borderColor: "#3b82f6",
   },
   {
     review1:
@@ -172,6 +175,7 @@ const expCards: ExpCard[] = [
       "Implemented multi-criteria product filtering (price, brand, category, attributes) using WordPress plugins to improve product discovery.",
       "Customized and optimized the WooCommerce product listing and checkout flow, integrating third-party plugins to meet business requirements and improve user experience.",
     ],
+    borderColor: "#6d45ce",
   },
 ];
 

@@ -25,7 +25,7 @@ const TextReveal = memo(function TextReveal({
   text,
   children,
   className = "",
-  staggerDelayMs = 500,
+  staggerDelayMs = 80,
   durationMs = 500,
   initialDelayMs = 0,
 }: TextRevealProps) {

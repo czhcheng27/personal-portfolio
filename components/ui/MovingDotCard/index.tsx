@@ -143,14 +143,26 @@ const MovingBorder = ({
     }
   });
 
-  const x = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).x ?? 0
-  );
-  const y = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).y ?? 0
-  );
+  const x = useTransform(progress, (val) => {
+    // 防止在路径为空或未准备好时调用 getPointAtLength
+    if (!pathRef.current || pathLength === 0) return 0;
+    try {
+      return pathRef.current.getPointAtLength(val).x;
+    } catch {
+      return 0;
+    }
+  });
+
+  const y = useTransform(progress, (val) => {
+    // 防止在路径为空或未准备好时调用 getPointAtLength
+    if (!pathRef.current || pathLength === 0) return 0;
+    try {
+      return pathRef.current.getPointAtLength(val).y;
+    } catch {
+      return 0;
+    }
+  });
+
   const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
 
   return (

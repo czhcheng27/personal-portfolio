@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { expCards } from "@/constants";
-import GlowCard from "./GlowCard";
+import GlowElement from "./ui/GlowElement";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,7 +91,7 @@ const Experience = () => {
       const containerRect = cardsContainerRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
 
-      const startTrigger = viewportHeight * 0.90;
+      const startTrigger = viewportHeight * 0.9;
       const dist = startTrigger - containerRect.top;
       const totalDist = containerRect.height;
 
@@ -128,7 +128,12 @@ const Experience = () => {
             <div
               ref={globalLineRef}
               className="gradient-line w-1 h-full absolute top-0 left-0"
-              style={{ maskImage: "linear-gradient(to bottom, black 0%, transparent 0%)", WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 0%)" }}
+              style={{
+                maskImage:
+                  "linear-gradient(to bottom, black 0%, transparent 0%)",
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, black 0%, transparent 0%)",
+              }}
             />
           </div>
 
@@ -137,19 +142,24 @@ const Experience = () => {
             className="relative z-10 xl:space-y-32 space-y-10"
           >
             {expCards.map((card, idx) => (
-              <div
-                key={idx}
-                className="exp-card-wrapper"
-              >
+              <div key={idx} className="exp-card-wrapper">
                 <div className="hidden xl:block xl:w-2/5 timeline-card">
-                  <GlowCard card={card}>
-                    <Image
-                      src={card.imgPath}
-                      alt={card.title}
-                      width={300}
-                      height={27}
-                    />
-                  </GlowCard>
+                  <GlowElement>
+                    <div className="rounded-xl p-10 mb-5 break-inside-avoid-column">
+                      <div className="mb-5 space-y-1">
+                        <p className="text-white-50 text-lg">{card.review1}</p>
+                        <p className="text-white-50 text-lg">{card.review2}</p>
+                        <p className="text-white-50 text-lg">{card.review3}</p>
+                        <p className="text-white-50 text-lg">{card.review4}</p>
+                      </div>
+                      <Image
+                        src={card.imgPath}
+                        alt={card.title}
+                        width={300}
+                        height={27}
+                      />
+                    </div>
+                  </GlowElement>
                 </div>
 
                 <div className="xl:w-[calc(50%+40px)]">
@@ -157,9 +167,18 @@ const Experience = () => {
                     <div className="expText flex xl:gap-20 md:gap-10 gap-5 relative z-22">
                       <div
                         className="timeline-logo md:border-(--logo-border)"
-                        style={{ "--logo-border": card.borderColor } as React.CSSProperties}
+                        style={
+                          {
+                            "--logo-border": card.borderColor,
+                          } as React.CSSProperties
+                        }
                       >
-                        <Image src={card.logoPath} alt="logo" width={50} height={50} />
+                        <Image
+                          src={card.logoPath}
+                          alt="logo"
+                          width={50}
+                          height={50}
+                        />
                       </div>
                       <div>
                         <h1 className="font-semibold text-3xl">{card.title}</h1>

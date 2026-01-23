@@ -148,7 +148,7 @@ const GlowElement = ({
 
   return (
     <Tag
-      className={`relative h-12 inline-flex overflow-hidden ${radiusClass} focus:outline-none ${
+      className={`relative ${isButtonMode ? "h-12" : ""} inline-flex overflow-hidden ${radiusClass} focus:outline-none ${
         disabled ? "opacity-50 cursor-not-allowed" : ""
       } ${className}`}
       onClick={disabled ? undefined : onClick}

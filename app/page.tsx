@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import Hero from "@/components/Hero/Hero";
 import Navbar from "@/components/Navbar";
 import LazyLoadSection from "@/components/LazyLoadSection";
+import Projects from "@/components/Projects";
 
 // 懒加载非首屏组件，减少首屏负载
 const Experience = dynamic(() => import("@/components/Experience"), {
@@ -21,12 +22,17 @@ export default function Home() {
         <Navbar />
         <Hero />
       </div>
-      <LazyLoadSection>
+      {/* <LazyLoadSection>
         <Experience />
       </LazyLoadSection>
       <LazyLoadSection>
         <TechStack />
-      </LazyLoadSection>
+      </LazyLoadSection> */}
+
+      <Experience />
+      <TechStack />
+
+      <Projects />
     </div>
   );
 }

@@ -60,7 +60,6 @@
 
 /* --- Desktop Animation (md: 768px and up) --- */
 @media (min-width: 768px) {
-
   /* 1. Logo Group: Fades in centered, waits, then slides left */
   .navbar-slide-in {
     animation: logoCenterToLeft 1.2s cubic-bezier(0.25, 0.4, 0.25, 1) both;
@@ -74,7 +73,6 @@
 
 /* --- Mobile Animation (Below 768px) --- */
 @media (max-width: 767px) {
-
   /* Parent container: No movement, just visible */
   .navbar-slide-in {
     opacity: 1;
@@ -117,7 +115,6 @@
 
 /* Desktop: Title fades in */
 @keyframes titleReveal {
-
   0%,
   50% {
     opacity: 0;
@@ -144,6 +141,14 @@
 }
 
 @layer components {
+  .heading {
+    @apply font-bold text-4xl md:text-5xl text-center;
+  }
+
+  .headingWords {
+    @apply text-[#915EFF];
+  }
+
   .paddingX {
     @apply sm:px-16 px-6;
   }
@@ -184,14 +189,20 @@
     @apply border border-black-50 bg-black-100;
   }
 
+  .card-bg {
+    @apply bg-tertiary;
+  }
+
   .timeline {
     @apply absolute z-18 h-[110%] -top-10 w-1;
     transform-origin: bottom bottom;
     /* 从顶部纯色渐变到底部透明，形成流星尾巴收束效果 */
-    background: linear-gradient(to top,
-        var(--color-primary) 0%,
-        var(--color-primary) 85%,
-        transparent 100%);
+    background: linear-gradient(
+      to top,
+      var(--color-primary) 0%,
+      var(--color-primary) 85%,
+      transparent 100%
+    );
   }
 
   .timeline-logo {
@@ -237,22 +248,20 @@
 .black-gradient {
   background: #000000;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right,
-      #434343,
-      #000000);
+  background: -webkit-linear-gradient(to right, #434343, #000000);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right,
-      #434343,
-      #000000);
+  background: linear-gradient(to right, #434343, #000000);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .violet-gradient {
   background: #804dee;
   background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
-  background: -webkit-linear-gradient(-90deg,
-      #804dee 0%,
-      rgba(60, 51, 80, 0) 100%);
+  background: -webkit-linear-gradient(
+    -90deg,
+    #804dee 0%,
+    rgba(60, 51, 80, 0) 100%
+  );
 }
 
 /* canvas- styles */
@@ -268,7 +277,6 @@
 }
 
 @keyframes mulShdSpin {
-
   0%,
   100% {
     box-shadow:
@@ -371,26 +379,32 @@
   position: absolute;
   z-index: 30;
   width: 2px;
-  background: linear-gradient(0deg,
-      #8d68e6 0%,
-      #6d45ce 10%,
-      #52aeff 62.83%,
-      #fd5c79 73%);
+  background: linear-gradient(
+    0deg,
+    #8d68e6 0%,
+    #6d45ce 10%,
+    #52aeff 62.83%,
+    #fd5c79 73%
+  );
 }
 
 .gradient-edge:nth-of-type(1) {
   left: 0;
   background: rgb(0, 0, 0);
-  background: linear-gradient(90deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 
 .gradient-edge:nth-of-type(2) {
   right: 0;
-  background: linear-gradient(-90deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    -90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 
 .card {
@@ -415,10 +429,12 @@
   background-attachment: fixed;
   mask:
     linear-gradient(#0000, #0000),
-    conic-gradient(from calc((var(--start) - 15) * 1deg),
+    conic-gradient(
+      from calc((var(--start) - 15) * 1deg),
       #ffffff1f 0deg,
       white,
-      #ffffff00 100deg);
+      #ffffff00 100deg
+    );
   mask-composite: intersect;
   mask-clip: padding-box, border-box;
   opacity: 0;

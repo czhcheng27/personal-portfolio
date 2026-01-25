@@ -118,6 +118,10 @@ const Experience = () => {
       className="mx-auto max-w-8xl flex-center md:mt-40 mt-20 section-padding xl:px-0"
     >
       <div className="w-full h-full px-5">
+        <h1 className="heading">
+          My <span className="headingWords">work experience</span>
+        </h1>
+
         <div className="mt-32 relative">
           {/* 全局连续时间线 */}
           <div className="global-timeline-container absolute top-0 xl:left-1/2 md:left-10 left-5 h-full flex justify-center z-0">

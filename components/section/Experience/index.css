@@ -1,0 +1,27 @@
+/* --- 基础动画配置 (保持不变) --- */
+.obs-actor {
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              opacity 1.2s ease-out;
+  will-change: transform, opacity;
+}
+
+.slide-from-left { transform: translate3d(-150px, 0, 0); }
+.slide-from-right { transform: translate3d(150px, 0, 0); }
+.fade-only { transform: translate3d(0, 0, 0) !important; }
+
+.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* --- 修复流星尾巴效果 --- */
+.gradient-line {
+  position: absolute;
+  z-index: 30;
+  width: 2px;
+  background: linear-gradient(to bottom, #8d68e6, #6d45ce, #52aeff, #fd5c79);
+  /* 增加 mask 的平滑过渡，避免底部截断 */
+  transition: mask-image 0.1s linear, -webkit-mask-image 0.1s linear;
+  will-change: mask-image;
+}

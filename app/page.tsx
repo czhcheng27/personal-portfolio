@@ -5,7 +5,7 @@ import LazyLoadSection from "@/components/LazyLoadSection";
 import Projects from "@/components/Projects";
 
 // 懒加载非首屏组件，减少首屏负载
-const Experience = dynamic(() => import("@/components/Experience"), {
+const Experience = dynamic(() => import("@/components/section/Experience"), {
   ssr: true,
   loading: () => <div className="min-h-screen" />,
 });
@@ -22,15 +22,12 @@ export default function Home() {
         <Navbar />
         <Hero />
       </div>
-      {/* <LazyLoadSection>
+      <LazyLoadSection>
         <Experience />
       </LazyLoadSection>
       <LazyLoadSection>
         <TechStack />
-      </LazyLoadSection> */}
-
-      <Experience />
-      <TechStack />
+      </LazyLoadSection>
 
       <Projects />
     </div>

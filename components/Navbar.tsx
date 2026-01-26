@@ -6,9 +6,9 @@ import Link from "next/link";
 import { navLinks } from "@/constants";
 import { logo, menu, close } from "@/public/assets";
 
-interface NavbarProps { }
+interface NavbarProps {}
 
-const Navbar = ({ }: NavbarProps) => {
+const Navbar = ({}: NavbarProps) => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -30,11 +30,10 @@ const Navbar = ({ }: NavbarProps) => {
 
   return (
     <nav
-      className={`paddingX w-full flex items-center py-5 fixed top-0 z-50 bg-primary ${scrolled ? "shadow-lg" : ""
-        }`}
-      style={{ willChange: scrolled ? "auto" : "transform" }} // 优化滚动性能
+      className={`paddingX w-full flex items-center py-5 fixed top-0 inset-x-0 z-9999 transition-colors duration-300 ${scrolled ? "bg-primary/95 shadow-lg backdrop-blur-sm" : "bg-transparent"}`}
+      style={{ willChange: scrolled ? "auto" : "transform" }}
     >
-      <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
+      <div className="w-full flex justify-between items-center max-w-8xl mx-auto">
         <Link
           href="/"
           className="flex items-center"
@@ -68,8 +67,9 @@ const Navbar = ({ }: NavbarProps) => {
           {navLinks.map((nav) => (
             <li
               key={nav.id}
-              className={`${active === nav.title ? "text-white" : "text-secondary"
-                } hover:text-white text-[18px] font-medium cursor-pointer`}
+              className={`${
+                active === nav.title ? "text-white" : "text-secondary"
+              } hover:text-white text-[18px] font-medium cursor-pointer`}
               onClick={() => setActive(nav.title)}
             >
               <a href={`#${nav.id}`}>{nav.title}</a>
@@ -86,15 +86,17 @@ const Navbar = ({ }: NavbarProps) => {
           />
 
           <div
-            className={`${!toggle ? "hidden" : "flex"
-              } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-35 z-10 rounded-xl`}
+            className={`${
+              !toggle ? "hidden" : "flex"
+            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-35 z-10 rounded-xl`}
           >
             <ul className="list-none flex justify-end items-start flex-1 flex-col gap-4">
               {navLinks.map((nav) => (
                 <li
                   key={nav.id}
-                  className={`font-medium cursor-pointer ${active === nav.title ? "text-white" : "text-secondary"
-                    }`}
+                  className={`font-medium cursor-pointer ${
+                    active === nav.title ? "text-white" : "text-secondary"
+                  }`}
                   onClick={() => {
                     setToggle(!toggle);
                     setActive(nav.title);

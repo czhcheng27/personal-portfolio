@@ -40,7 +40,8 @@
     background: #171717;
     color: #ffffff;
     /* 性能优化：启用硬件加速 */
-    transform: translateZ(0);
+    /* removed transform: translateZ(0) to avoid creating a stacking context
+       that breaks position:fixed for the navbar. Use will-change if needed. */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -53,6 +54,14 @@
   /* 动画结束后移除 will-change */
   [data-motion-complete] {
     will-change: auto;
+  }
+
+  /* GSAP animated elements - GPU acceleration hints */
+  .timeline-card,
+  .expText,
+  .tech-card {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
   }
 }
 
@@ -142,7 +151,7 @@
 
 @layer components {
   .heading {
-    @apply font-bold text-4xl md:text-5xl text-center;
+    @apply text-white font-bold text-4xl md:text-5xl text-center;
   }
 
   .headingWords {
@@ -179,22 +188,6 @@
 
   .card-bg {
     @apply bg-tertiary;
-  }
-
-  .timeline {
-    @apply absolute z-18 h-[110%] -top-10 w-1;
-    transform-origin: bottom bottom;
-    /* 从顶部纯色渐变到底部透明，形成流星尾巴收束效果 */
-    background: linear-gradient(
-      to top,
-      var(--color-primary) 0%,
-      var(--color-primary) 85%,
-      transparent 100%
-    );
-  }
-
-  .timeline-logo {
-    @apply md:size-20 size-10 flex-none rounded-full flex justify-center items-center md:-translate-y-7 border border-black-50 bg-black-100 z-30 relative;
   }
 
   .tech-card-animated-bg {
@@ -361,19 +354,6 @@
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.7),
       -1.8em -1.8em 0 0em #ffffff;
   }
-}
-
-.gradient-line {
-  position: absolute;
-  z-index: 30;
-  width: 2px;
-  background: linear-gradient(
-    0deg,
-    #8d68e6 0%,
-    #6d45ce 10%,
-    #52aeff 62.83%,
-    #fd5c79 73%
-  );
 }
 
 .gradient-edge:nth-of-type(1) {

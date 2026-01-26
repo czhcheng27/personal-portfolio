@@ -152,6 +152,49 @@
   .animate-bounceY {
     animation: bounceY 1.5s ease-in-out infinite;
   }
+
+  @keyframes customFloat {
+    0% {
+      /* 使用 3d 变换强制开启 GPU 加速 */
+      transform: translate3d(0, 0, 0) rotateY(0deg);
+    }
+    50% {
+      /* 稍微加大一点幅度看效果 */
+      transform: translate3d(0, -15px, 0) rotateY(5deg);
+    }
+    100% {
+      transform: translate3d(0, 0, 0) rotateY(0deg);
+    }
+  }
+
+  .hero-3d-container {
+    display: block; /* 确保是块级元素 */
+    perspective: 1000px;
+    animation: customFloat 6s ease-in-out infinite;
+    will-change: transform; /* 告诉浏览器这个元素会动 */
+  }
+
+  .animate-float {
+    will-change: transform;
+    /* 使用 ease-in-out 让上下浮动更自然 */
+    animation: simpleFloat 4s ease-in-out infinite;
+  }
+
+  @keyframes simpleFloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px); /* 稍微加大浮动距离 */
+    }
+  }
+}
+
+/* 针对 TechIcon 的容器优化 */
+.tech-icon-wrapper canvas {
+  /* 解决某些浏览器下 Canvas 默认背景不透明问题 */
+  background: transparent !important;
 }
 
 /* canvas- styles */

@@ -1,81 +1,87 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import { Environment, Float, OrbitControls, useGLTF } from "@react-three/drei";
+import {
+  OrbitControls,
+  useGLTF,
+  Environment,
+  Preload,
+} from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import type { TechIcon } from "@/constants";
+import type { TechIcon as TechIconType } from "@/constants";
 
 interface TechIconProps {
-  model: TechIcon;
+  model: TechIconType;
 }
 
-// Separate component for the 3D model - must be inside Canvas
 const Model = ({ model }: TechIconProps) => {
   const { scene } = useGLTF(model.modelPath);
-  const groupRef = useRef<THREE.Group>(null);
 
-  // Create a stable clone of the scene that won't change on re-renders
+  // 稳定克隆并修复材质
   const clonedScene = useMemo(() => {
     const clone = scene.clone(true);
-    // Deep clone materials to avoid sharing issues
     clone.traverse((child) => {
-      if (child instanceof THREE.Mesh && child.material) {
-        child.material = Array.isArray(child.material)
-          ? child.material.map((m) => m.clone())
-          : child.material.clone();
+      if (child instanceof THREE.Mesh) {
+        // 修复 Threejs 模型的特定颜色问题
+        if (model.name === "Threejs" && child.name === "Object_5") {
+          child.material = new THREE.MeshStandardMaterial({ color: "white" });
+        } else if (child.material) {
+          child.material = child.material.clone();
+        }
       }
     });
     return clone;
-  }, [scene]);
-
-  useEffect(() => {
-    if (model.name === "Threejs" && groupRef.current) {
-      groupRef.current.traverse((child) => {
-        if (child instanceof THREE.Mesh && child.name === "Object_5") {
-          child.material = new THREE.MeshStandardMaterial({ color: "white" });
-        }
-      });
-    }
-  }, [model.name, clonedScene]);
+  }, [scene, model.name]);
 
   return (
-    <Float speed={5.5} rotationIntensity={0.5} floatIntensity={0.9}>
-      <group ref={groupRef} scale={model.scale} rotation={model.rotation}>
-        <primitive object={clonedScene} />
-      </group>
-    </Float>
+    <group scale={model.scale} rotation={model.rotation}>
+      <primitive object={clonedScene} />
+    </group>
   );
 };
 
 const TechIcon = ({ model }: TechIconProps) => {
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: "400px" } // 提前 400px 就开始加载渲染，保证用户看到时已经就绪
+    );
+
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <Canvas
-      frameloop="always"
-      dpr={[1, 1.5]}
-      gl={{
-        antialias: true,
-        powerPreference: "low-power",
-        // Prevent context loss by limiting resources
-        preserveDrawingBuffer: false,
-      }}
-    >
-      <Suspense fallback={null}>
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
-        <spotLight
-          position={[10, 15, 10]}
-          angle={0.3}
-          penumbra={1}
-          intensity={2}
-        />
-        <Environment preset="city" />
+    <div ref={containerRef} className="w-full h-full">
+      <Canvas
+        // 关键点：使用 demand 模式，模型加载完渲染一次后就静止，除非你操作它
+        frameloop={isInView ? "demand" : "never"}
+        dpr={[1, 2]} // 恢复高分辨率
+        gl={{
+          antialias: true, // 恢复抗锯齿
+          alpha: true,
+          powerPreference: "high-performance",
+        }}
+      >
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 5, 5]} intensity={1} />
+          {/* 使用 Environment 提升质感，city 预设会自动被 Drei 缓存 */}
+          <Environment preset="city" />
 
-        <Model model={model} />
+          <Model model={model} />
 
-        <OrbitControls enableZoom={false} enablePan={false} />
-      </Suspense>
-    </Canvas>
+          <OrbitControls enableZoom={false} enablePan={false} />
+          <Preload all />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 };
 

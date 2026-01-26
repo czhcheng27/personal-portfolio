@@ -28,33 +28,49 @@ const Computers = () => {
   const VERT_OMEGA = (2 * Math.PI) / VERT_PERIOD;
 
   // useFrame: 使用可配置参数创建平滑的左右摆动 + 轻微上下浮动
-  useFrame((state) => {
-    if (meshRef.current) {
-      const t = state.clock.elapsedTime;
-      // 在原有偏移基础上应用小幅正弦摆动
-      meshRef.current.rotation.y = -0.2 + Math.sin(t * ROT_OMEGA) * ROT_AMP;
-      meshRef.current.position.y = -3.25 + Math.sin(t * VERT_OMEGA) * VERT_AMP;
-    }
-  });
+  // useFrame((state) => {
+  //   if (meshRef.current) {
+  //     const t = state.clock.elapsedTime;
+  //     // 在原有偏移基础上应用小幅正弦摆动
+  //     meshRef.current.rotation.y = -0.2 + Math.sin(t * ROT_OMEGA) * ROT_AMP;
+  //     meshRef.current.position.y = -3.25 + Math.sin(t * VERT_OMEGA) * VERT_AMP;
+  //   }
+  // });
 
   return (
-    <group ref={meshRef}>
-      {/* <hemisphereLight intensity={5} groundColor="black" />
-      <spotLight
-        position={[-20, 50, 10]}
-        angle={0.12}
-        penumbra={1}
-        intensity={5}
-        castShadow
-        shadow-mapSize={1024}
-      />
-      <pointLight intensity={3} /> */}
+    // <group ref={meshRef}>
+    //   {/* <hemisphereLight intensity={5} groundColor="black" />
+    //   <spotLight
+    //     position={[-20, 50, 10]}
+    //     angle={0.12}
+    //     penumbra={1}
+    //     intensity={5}
+    //     castShadow
+    //     shadow-mapSize={1024}
+    //   />
+    //   <pointLight intensity={3} /> */}
+    //   <ambientLight intensity={1.5} />
+    //   <directionalLight position={[10, 15, -5]} intensity={2} castShadow />
+
+    //   <primitive
+    //     object={computer.scene}
+    //     scale={1.1}
+    //     position={[-1, 1.5, -1.75]}
+    //     rotation={[-0.01, 0, -0.1]}
+    //   />
+    // </group>
+    <group
+      ref={meshRef}
+      rotation={[0, -0.2, 0]} // 这里补偿 rotation.y = -0.2
+      position={[0, -3.25, 0]} // 这里补偿 position.y = -3.25
+    >
       <ambientLight intensity={1.5} />
-      <directionalLight position={[10, 15, -5]} intensity={2} castShadow />
+      <directionalLight position={[10, 15, -5]} intensity={2} />
 
       <primitive
         object={computer.scene}
         scale={1.1}
+        // 这里的坐标是相对于 group 的
         position={[-1, 1.5, -1.75]}
         rotation={[-0.01, 0, -0.1]}
       />
@@ -86,9 +102,9 @@ const ComputersCanvas = ({}: ComputersCanvasProps) => {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-full">
+    <div ref={containerRef} className="w-full h-full hero-3d-container">
       <Canvas
-        frameloop={isInView ? "always" : "never"}
+        frameloop={isInView ? "demand" : "never"}
         shadows
         dpr={[1, 1.5]}
         camera={{ position: [20, 3, 5], fov: 25 }}

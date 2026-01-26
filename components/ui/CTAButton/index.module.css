@@ -1,4 +1,4 @@
-@reference "../../app/globals.css";
+@reference "../../../app/globals.css";
 
 .ctaWrapper {
   @apply relative z-20 cursor-pointer inline-block;

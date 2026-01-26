@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { navLinks } from "@/constants";
-import { logo, menu, close } from "@/public/assets";
+import menu from "@/public/assets/icons/menu.svg";
+import close from "@/public/assets/icons/close.svg";
 
 interface NavbarProps {}
 

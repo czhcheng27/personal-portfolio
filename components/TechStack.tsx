@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { techStackIcons } from "@/constants";
+import SectionContainer from "./SectionContainer";
 
 // Dynamically import TechIcon with SSR disabled to prevent server-side rendering issues
 // useGLTF cannot parse relative URLs during SSR/prerendering
@@ -21,9 +22,9 @@ const TechIcon = dynamic(() => import("./TechIcon"), {
 // Register the ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-type TechStackProps = object
+type TechStackProps = object;
 
-const TechStack = ({ }: TechStackProps) => {
+const TechStack = ({}: TechStackProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Animate the tech cards in the skills section
@@ -54,42 +55,40 @@ const TechStack = ({ }: TechStackProps) => {
             trigger: "#skills", // Trigger the animation when the user scrolls to the #skills wrapper
             start: "top center", // Start the animation when the top of the wrapper is at the center of the screen
           },
-        },
+        }
       );
 
       // Refresh ScrollTrigger after animation setup
       ScrollTrigger.refresh();
     },
-    { scope: containerRef, dependencies: [] },
+    { scope: containerRef, dependencies: [] }
   );
 
   return (
-    <div
-      ref={containerRef}
-      id="skills"
-      className="mx-auto max-w-8xl flex-center section-padding"
-    >
-      <div className="w-full h-full px-5">
-        <div className="tech-grid">
-          {techStackIcons.map((techStackIcon, idx) => (
-            <div
-              key={idx}
-              className="relative card-border tech-card overflow-hidden group rounded-lg"
-            >
-              <div className="tech-card-animated-bg" />
-              <div className="tech-card-content">
-                <div className="tech-icon-wrapper">
-                  <TechIcon model={techStackIcon} />
-                </div>
-                <div className="padding-x w-full">
-                  <p>{techStackIcon.name}</p>
-                </div>
+    <SectionContainer ref={containerRef} id="skills">
+      <h1 className="heading">
+        A Selection of <span className="headingWords">Skills</span>
+      </h1>
+
+      <div className="tech-grid">
+        {techStackIcons.map((techStackIcon, idx) => (
+          <div
+            key={idx}
+            className="relative card-border tech-card overflow-hidden group rounded-lg"
+          >
+            <div className="tech-card-animated-bg" />
+            <div className="tech-card-content">
+              <div className="tech-icon-wrapper">
+                <TechIcon model={techStackIcon} />
+              </div>
+              <div className="padding-x w-full">
+                <p>{techStackIcon.name}</p>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </div>
+    </SectionContainer>
   );
 };
 

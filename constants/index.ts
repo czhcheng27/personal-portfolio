@@ -16,6 +16,7 @@ import {
   figma,
   docker,
   threejs,
+  github,
 } from "../public/assets";
 
 export const navLinks = [
@@ -219,39 +220,61 @@ const projects = [
     title: "3D Solar System Planets to Explore",
     des: "Explore the wonders of our solar system with this captivating 3D simulation of the planets using Three.js.",
     img: "/assets/bg/p1.svg",
-    iconLists: ["/assets/icons/re.svg", "/assets/icons/tail.svg", "/assets/icons/ts.svg", "/assets/icons/three.svg", "/assets/icons/fm.svg"],
+    iconLists: [
+      "/assets/icons/re.svg",
+      "/assets/icons/tail.svg",
+      "/assets/icons/ts.svg",
+      "/assets/icons/three.svg",
+      "/assets/icons/fm.svg",
+    ],
     link: "/ui.earth.com",
+    github: "github.com/",
   },
   {
     id: 2,
     title: "Yoom - Video Conferencing App",
     des: "Simplify your video conferencing experience with Yoom. Seamlessly connect with colleagues and friends.",
     img: "/assets/bg/p2.svg",
-    iconLists: ["/assets/icons/next.svg", "/assets/icons/tail.svg", "/assets/icons/ts.svg", "/assets/icons/stream.svg", "/assets/icons/c.svg"],
+    iconLists: [
+      "/assets/icons/next.svg",
+      "/assets/icons/tail.svg",
+      "/assets/icons/ts.svg",
+      "/assets/icons/stream.svg",
+      "/assets/icons/c.svg",
+    ],
     link: "/ui.yoom.com",
+    github: "github.com/",
   },
   {
     id: 3,
     title: "AI Image SaaS - Canva Application",
     des: "A REAL Software-as-a-Service app with AI features and a payments and credits system using the latest tech stack.",
     img: "/assets/bg/p3.svg",
-    iconLists: ["/assets/icons/re.svg", "/assets/icons/tail.svg", "/assets/icons/ts.svg", "/assets/icons/three.svg", "/assets/icons/c.svg"],
+    iconLists: [
+      "/assets/icons/re.svg",
+      "/assets/icons/tail.svg",
+      "/assets/icons/ts.svg",
+      "/assets/icons/three.svg",
+      "/assets/icons/c.svg",
+    ],
     link: "/ui.aiimg.com",
+    github: "github.com/",
   },
   {
     id: 4,
     title: "Animated Apple Iphone 3D Website",
     des: "Recreated the Apple iPhone 15 Pro website, combining GSAP animations and Three.js 3D effects..",
     img: "/assets/bg/p4.svg",
-    iconLists: ["/assets/icons/next.svg", "/assets/icons/tail.svg", "/assets/icons/ts.svg", "/assets/icons/three.svg", "/assets/icons/gsap.svg"],
+    iconLists: [
+      "/assets/icons/next.svg",
+      "/assets/icons/tail.svg",
+      "/assets/icons/ts.svg",
+      "/assets/icons/three.svg",
+      "/assets/icons/gsap.svg",
+    ],
     link: "/ui.apple.com",
+    github: "github.com/",
   },
 ];
 
-export {
-  services,
-  technologies,
-  expCards,
-  techStackIcons,
-  projects,
-};
+export { services, technologies, expCards, techStackIcons, projects };

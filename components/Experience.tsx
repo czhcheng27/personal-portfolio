@@ -7,11 +7,12 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { expCards } from "@/constants";
 import GlowElement from "./ui/GlowElement";
+import SectionContainer from "./SectionContainer";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Experience = () => {
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const globalLineRef = useRef<HTMLDivElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
 
@@ -112,105 +113,92 @@ const Experience = () => {
   }, []);
 
   return (
-    <section
-      ref={containerRef}
-      id="experience"
-      className="mx-auto max-w-8xl flex-center md:mt-40 mt-20 section-padding xl:px-0"
-    >
-      <div className="w-full h-full px-5">
-        <h1 className="heading">
-          My <span className="headingWords">work experience</span>
-        </h1>
+    <SectionContainer ref={containerRef} id="experience">
+      <h1 className="heading">
+        My <span className="headingWords">work experience</span>
+      </h1>
 
-        <div className="mt-32 relative">
-          {/* 全局连续时间线 */}
-          <div className="global-timeline-container absolute top-0 xl:left-1/2 md:left-10 left-5 h-full flex justify-center z-0">
-            {/* 背景暗线 */}
-            <div className="w-1 h-full bg-primary" />
+      <div className="mt-12 lg:mt-32 relative">
+        {/* 全局连续时间线 */}
+        <div className="global-timeline-container absolute top-0 xl:left-1/2 md:left-10 left-5 h-full flex justify-center z-0">
+          {/* 背景暗线 */}
+          <div className="w-1 h-full bg-primary" />
 
-            {/* 彩管渐变线 - 覆盖在上面 */}
-            <div
-              ref={globalLineRef}
-              className="gradient-line w-1 h-full absolute top-0 left-0"
-              style={{
-                maskImage:
-                  "linear-gradient(to bottom, black 0%, transparent 0%)",
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, black 0%, transparent 0%)",
-              }}
-            />
-          </div>
-
+          {/* 彩管渐变线 - 覆盖在上面 */}
           <div
-            ref={cardsContainerRef}
-            className="relative z-10 xl:space-y-32 space-y-10"
-          >
-            {expCards.map((card, idx) => (
-              <div key={idx} className="exp-card-wrapper">
-                <div className="hidden xl:block xl:w-2/5 timeline-card">
-                  <GlowElement>
-                    <div className="rounded-xl p-10 mb-5 break-inside-avoid-column">
-                      <div className="mb-5 space-y-1">
-                        <p className="text-white-50 text-lg">{card.review1}</p>
-                        <p className="text-white-50 text-lg">{card.review2}</p>
-                        <p className="text-white-50 text-lg">{card.review3}</p>
-                        <p className="text-white-50 text-lg">{card.review4}</p>
-                      </div>
+            ref={globalLineRef}
+            className="gradient-line w-1 h-full absolute top-0 left-0"
+            style={{
+              maskImage: "linear-gradient(to bottom, black 0%, transparent 0%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, black 0%, transparent 0%)",
+            }}
+          />
+        </div>
+
+        <div
+          ref={cardsContainerRef}
+          className="relative z-10 xl:space-y-32 space-y-10"
+        >
+          {expCards.map((card, idx) => (
+            <div key={idx} className="exp-card-wrapper">
+              <div className="hidden xl:block xl:w-2/5 timeline-card">
+                <GlowElement>
+                  <div className="rounded-xl p-10 mb-5 break-inside-avoid-column">
+                    <div className="mb-5 space-y-1">
+                      <p className="text-white-50 text-lg">{card.review1}</p>
+                      <p className="text-white-50 text-lg">{card.review2}</p>
+                      <p className="text-white-50 text-lg">{card.review3}</p>
+                      <p className="text-white-50 text-lg">{card.review4}</p>
+                    </div>
+                    <Image
+                      src={card.imgPath}
+                      alt={card.title}
+                      width={300}
+                      height={27}
+                    />
+                  </div>
+                </GlowElement>
+              </div>
+
+              <div className="xl:w-[calc(50%+40px)]">
+                <div className="flex items-start">
+                  <div className="expText flex xl:gap-20 md:gap-10 gap-5 relative z-22">
+                    <div
+                      className="timeline-logo md:border-(--logo-border)"
+                      style={
+                        {
+                          "--logo-border": card.borderColor,
+                        } as React.CSSProperties
+                      }
+                    >
                       <Image
-                        src={card.imgPath}
-                        alt={card.title}
-                        width={300}
-                        height={27}
+                        src={card.logoPath}
+                        alt="logo"
+                        width={50}
+                        height={50}
                       />
                     </div>
-                  </GlowElement>
-                </div>
-
-                <div className="xl:w-[calc(50%+40px)]">
-                  <div className="flex items-start">
-                    <div className="expText flex xl:gap-20 md:gap-10 gap-5 relative z-22">
-                      <div
-                        className="timeline-logo md:border-(--logo-border)"
-                        style={
-                          {
-                            "--logo-border": card.borderColor,
-                          } as React.CSSProperties
-                        }
-                      >
-                        <Image
-                          src={card.logoPath}
-                          alt="logo"
-                          width={50}
-                          height={50}
-                        />
-                      </div>
-                      <div>
-                        <h1 className="font-semibold text-3xl">{card.title}</h1>
-                        <p className="my-5 text-white-50">
-                          🗓️&nbsp;{card.date}
-                        </p>
-                        <p className="text-[#839CB5] italic">
-                          Key Achievements
-                        </p>
-                        <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 text-white-50">
-                          {card.responsibilities.map(
-                            (responsibility, index) => (
-                              <li key={index} className="text-lg">
-                                {responsibility}
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
+                    <div>
+                      <h1 className="font-semibold text-3xl">{card.title}</h1>
+                      <p className="my-5 text-white-50">🗓️&nbsp;{card.date}</p>
+                      <p className="text-[#839CB5] italic">Key Achievements</p>
+                      <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 text-white-50">
+                        {card.responsibilities.map((responsibility, index) => (
+                          <li key={index} className="text-lg">
+                            {responsibility}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
-    </section>
+    </SectionContainer>
   );
 };
 

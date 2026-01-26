@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
-import Hero from "@/components/Hero/Hero";
-import Navbar from "@/components/Navbar";
 import LazyLoadSection from "@/components/LazyLoadSection";
+import HeroSection from "@/components/section/Hero";
 import Projects from "@/components/Projects";
 
 // 懒加载非首屏组件，减少首屏负载
@@ -17,19 +16,11 @@ const TechStack = dynamic(() => import("@/components/TechStack"), {
 
 export default function Home() {
   return (
-    <div className="relative z-0 bg-primary pb-10">
-      <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
-        <Navbar />
-        <Hero />
-      </div>
-      <LazyLoadSection>
-        <Experience />
-      </LazyLoadSection>
-      <LazyLoadSection>
-        <TechStack />
-      </LazyLoadSection>
-
+    <div className="relative z-0 bg-primary pb-10 overflow-x-hidden">
+      <HeroSection />
+      <TechStack />
       <Projects />
+      <Experience />
     </div>
   );
 }

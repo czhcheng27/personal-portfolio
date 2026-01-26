@@ -3,10 +3,9 @@
 import dynamic from "next/dynamic";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Hero from "@/components/Hero/Hero";
-import Navbar from "@/components/Navbar";
-import LazyLoadSection from "@/components/LazyLoadSection";
-import Projects from "@/components/Projects";
+import LazyLoadSection from "@/components/base/LazyLoadSection";
+import Hero from "@/components/section/Hero";
+import Projects from "@/components/section/Projects";
 import { useEffect } from "react";
 
 // 懒加载非首屏组件，减少首屏负载
@@ -15,7 +14,7 @@ const Experience = dynamic(() => import("@/components/section/Experience"), {
   loading: () => <div className="min-h-screen" />,
 });
 
-const TechStack = dynamic(() => import("@/components/TechStack"), {
+const TechStack = dynamic(() => import("@/components/section/Techs"), {
   ssr: true,
   loading: () => <div className="min-h-screen" />,
 });
@@ -28,19 +27,18 @@ export default function Home() {
     });
   }, []);
   return (
-    <div className="relative z-0 bg-primary pb-10">
-      <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
-        <Navbar />
-        <Hero />
-      </div>
-      <LazyLoadSection>
+    <div className="relative z-0 bg-primary">
+      <Hero />
+      {/* <LazyLoadSection>
         <Experience />
       </LazyLoadSection>
       <LazyLoadSection>
         <TechStack />
-      </LazyLoadSection>
+      </LazyLoadSection> */}
 
+      <Experience />
       <Projects />
+      <TechStack />
     </div>
   );
 }

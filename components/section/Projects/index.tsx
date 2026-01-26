@@ -1,11 +1,11 @@
 "use client";
 
 import { projects } from "@/constants";
-import ThreeDCard from "./ui/ThreeDCard";
+import ThreeDCard from "@/components/common/ThreeDCard";
 import { FaLocationArrow } from "react-icons/fa6";
 import Image from "next/image";
 import GithubImg from "@/public/assets/icons/github.png";
-import SectionContainer from "./SectionContainer";
+import SectionContainer from "@/components/layout/SectionContainer";
 
 const Projects = () => {
   return (

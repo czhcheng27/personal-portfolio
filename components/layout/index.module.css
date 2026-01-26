@@ -1,0 +1,69 @@
+/* Header animations (moved from app/globals.css). Kept global so existing classNames continue to work. */
+:global {
+  /* --- Desktop Animation (md: 768px and up) --- */
+  @media (min-width: 768px) {
+    /* 1. Logo Group: Fades in centered, waits, then slides left */
+    .navbar-slide-in {
+      animation: logoCenterToLeft 1.2s cubic-bezier(0.25, 0.4, 0.25, 1) both;
+    }
+
+    /* 2. Title Group: Waits 0.6s, then fades in sliding from left */
+    .navbar-fade-in {
+      animation: titleReveal 1.2s cubic-bezier(0.25, 0.4, 0.25, 1) both;
+    }
+  }
+
+  /* --- Mobile Animation (Below 768px) --- */
+  @media (max-width: 767px) {
+    /* Parent container: No movement, just visible */
+    .navbar-slide-in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Name text: Slides out from left (behind logo) to right */
+    .logo-text {
+      animation: logoNameSlideRight 0.8s cubic-bezier(0.25, 0.4, 0.25, 1) both;
+    }
+  }
+
+  /* Keyframes Definitions */
+  /* Desktop: Logo moves from Center (80px) to Left (0px) */
+  @keyframes logoCenterToLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(80px);
+      /* Start centered */
+    }
+
+    40% {
+      opacity: 1;
+      transform: translateX(80px);
+      /* Fade in done, still centered */
+    }
+
+    50% {
+      transform: translateX(80px);
+      /* Wait for a moment */
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+      /* Slide to left */
+    }
+  }
+
+  /* Mobile: Name slides from left to right */
+  @keyframes logoNameSlideRight {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}

@@ -2,9 +2,9 @@ import { Suspense, useRef } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
-import CanvasLoader from "./Loader";
+import CanvasLoader from "../../base/Loader";
 
-interface ComputersCanvasProps { }
+interface ComputersCanvasProps {}
 
 const Computers = () => {
   // load from public folder via absolute path
@@ -54,17 +54,19 @@ const Computers = () => {
       <directionalLight position={[10, 15, -5]} intensity={2} castShadow />
       <primitive
         object={computer.scene}
-        scale={0.75}
+        // scale={0.75}
+        scale={1.1}
         // position={[-1, -3.25, -1.5]}
         // rotation={[-0.01, -0.2, -0.1]}
-        position={[-1, 0, -1.5]}
+        // position={[-1, 0, -1.5]}
+        position={[-1, 1.5, -1.75]}
         rotation={[-0.01, 0, -0.1]}
       />
     </group>
   );
 };
 
-const ComputersCanvas = ({ }: ComputersCanvasProps) => {
+const ComputersCanvas = ({}: ComputersCanvasProps) => {
   return (
     <Canvas
       frameloop="always"

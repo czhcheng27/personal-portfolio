@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { techStackIcons } from "@/constants";
-import SectionContainer from "./SectionContainer";
+import SectionContainer from "../../layout/SectionContainer";
 
 // Dynamically import TechIcon with SSR disabled to prevent server-side rendering issues
 // useGLTF cannot parse relative URLs during SSR/prerendering
@@ -24,7 +24,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type TechStackProps = object;
 
-const TechStack = ({}: TechStackProps) => {
+const Techs = ({}: TechStackProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Animate the tech cards in the skills section
@@ -92,4 +92,4 @@ const TechStack = ({}: TechStackProps) => {
   );
 };
 
-export default TechStack;
+export default Techs;

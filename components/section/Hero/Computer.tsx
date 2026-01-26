@@ -1,4 +1,4 @@
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
@@ -39,7 +39,7 @@ const Computers = () => {
 
   return (
     <group ref={meshRef}>
-      <hemisphereLight intensity={5} groundColor="black" />
+      {/* <hemisphereLight intensity={5} groundColor="black" />
       <spotLight
         position={[-20, 50, 10]}
         angle={0.12}
@@ -48,17 +48,13 @@ const Computers = () => {
         castShadow
         shadow-mapSize={1024}
       />
-      <pointLight intensity={3} />
+      <pointLight intensity={3} /> */}
       <ambientLight intensity={1.5} />
-
       <directionalLight position={[10, 15, -5]} intensity={2} castShadow />
+
       <primitive
         object={computer.scene}
-        // scale={0.75}
         scale={1.1}
-        // position={[-1, -3.25, -1.5]}
-        // rotation={[-0.01, -0.2, -0.1]}
-        // position={[-1, 0, -1.5]}
         position={[-1, 1.5, -1.75]}
         rotation={[-0.01, 0, -0.1]}
       />
@@ -67,25 +63,49 @@ const Computers = () => {
 };
 
 const ComputersCanvas = ({}: ComputersCanvasProps) => {
-  return (
-    <Canvas
-      frameloop="always"
-      shadows
-      dpr={[1, 2]}
-      camera={{ position: [20, 3, 5], fov: 25 }}
-      gl={{ preserveDrawingBuffer: true }}
-    >
-      <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls
-          enableZoom={false}
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
-        />
-        <Computers />
-      </Suspense>
+  const [isInView, setIsInView] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-      <Preload all />
-    </Canvas>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // 当 Canvas 进入视口时 entry.isIntersecting 为 true
+        setIsInView(entry.isIntersecting);
+      },
+      {
+        rootMargin: "200px", // 提前 200px 开始加载/渲染，防止用户滚动太快看到空白
+        threshold: 0,
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="w-full h-full">
+      <Canvas
+        frameloop={isInView ? "always" : "never"}
+        shadows
+        dpr={[1, 1.5]}
+        camera={{ position: [20, 3, 5], fov: 25 }}
+        gl={{ preserveDrawingBuffer: true }}
+      >
+        <Suspense fallback={<CanvasLoader />}>
+          <OrbitControls
+            enableZoom={false}
+            maxPolarAngle={Math.PI / 2}
+            minPolarAngle={Math.PI / 2}
+          />
+          {isInView && <Computers />}
+        </Suspense>
+
+        <Preload all />
+      </Canvas>
+    </div>
   );
 };
 

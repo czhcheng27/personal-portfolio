@@ -1,21 +1,38 @@
-/* --- 基础动画配置 (保持不变) --- */
+#experience {
+  /* 强制禁用浏览器的自动滚动调整，防止它在动画时乱跳 */
+  overflow-anchor: none;
+}
+
+.exp-card-wrapper {
+  /* 每一个块都开启独立合成层，互不干扰 */
+  isolation: isolate;
+  backface-visibility: hidden;
+}
+
+.is-visible {
+  opacity: 1 !important;
+  /* 移除 transform 动画完成后可能残留的计算压力 */
+  transform: translate3d(0, 0, 0) !important;
+  /* 确保动画结束后，元素完全回归文档流 */
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s ease-out;
+}
+
 .obs-actor {
   opacity: 0;
-  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), 
-              opacity 1.2s ease-out;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              opacity 0.8s ease-out;
+  /* 关键修复：防止 3D 转换时的深度抖动 */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
   will-change: transform, opacity;
 }
 
-.slide-from-left { transform: translate3d(-150px, 0, 0); }
-.slide-from-right { transform: translate3d(150px, 0, 0); }
-.fade-only { transform: translate3d(0, 0, 0) !important; }
+/* 调整滑入距离，减少对文档流的冲击 */
+.slide-from-left { transform: translate3d(-80px, 0, 0); }
+.slide-from-right { transform: translate3d(80px, 0, 0); }
 
-.is-visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) !important;
-}
-
-/* --- 修复流星尾巴效果 --- */
+/* 进度线平滑度：减少渲染开销 */
 .gradient-line {
   position: absolute;
   z-index: 30;

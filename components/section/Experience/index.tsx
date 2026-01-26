@@ -14,59 +14,61 @@ const Experience = () => {
     const cardsContainerRef = useRef<HTMLDivElement>(null);
   
     useEffect(() => {
-      // 1. 入场观察者 (处理卡片、文字、Logo 的渐现)
+      let ticking = false;
+        
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
+              // 使用 rAF 确保在浏览器绘制下一帧前添加类名，避免布局突变
+              window.requestAnimationFrame(() => {
+                entry.target.classList.add("is-visible");
+              });
+              observer.unobserve(entry.target);
             }
           });
         },
-        { threshold: 0.05, rootMargin: "0px 0px -10% 0px" }
+        { 
+          threshold: 0.01, 
+          // 增加底部余量，让动画在更靠近屏幕中心时才触发，避开滚动边缘
+          rootMargin: "0px 0px -150px 0px" 
+        }
       );
   
+      // 只对特定的动画元素进行监听
       const animatedElements = document.querySelectorAll(".obs-actor");
       animatedElements.forEach((el) => observer.observe(el));
   
-      // 2. 优化后的进度线滚动逻辑
       const handleScroll = () => {
-        if (!globalLineRef.current || !cardsContainerRef.current) return;
-        
-        const containerRect = cardsContainerRef.current.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-  
-        // 【时机修复】：设置触发点为视口高度的 95% (几乎一露头就动)
-        const startTrigger = viewportHeight * 0.95;
-        
-        // 计算相对于容器顶部的滚动距离
-        const dist = startTrigger - containerRect.top;
-        const totalDist = containerRect.height;
-        
-        // 进度百分比
-        const progress = Math.max(0, Math.min(1, dist / totalDist));
-        const percent = progress * 100;
-  
-        /**
-         * 【流星尾巴修复】：
-         * 我们不直接在 percent 处截断，而是：
-         * 0% -> percent-5%: 纯黑 (显示)
-         * percent-5% -> percent: 渐变到透明 (流星尾巴)
-         * percent -> 100%: 全透明 (隐藏)
-         */
-        const mask = `linear-gradient(to bottom, 
-          black 0%, 
-          black ${Math.max(0, percent - 8)}%, 
-          transparent ${percent}%)`;
-  
-        globalLineRef.current.style.webkitMaskImage = mask;
-        globalLineRef.current.style.maskImage = mask;
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            if (globalLineRef.current && cardsContainerRef.current) {
+              const containerRect = cardsContainerRef.current.getBoundingClientRect();
+              const viewportHeight = window.innerHeight;
+
+              // 稍微推迟线条启动时机，避开第一、二个卡片的动画高峰
+              const startTrigger = viewportHeight * 0.85;
+              const dist = startTrigger - containerRect.top;
+              const totalDist = containerRect.height;
+              
+              const progress = Math.min(Math.max(dist / totalDist, 0), 1);
+              const percent = progress * 100;
+    
+              const mask = `linear-gradient(to bottom, 
+                black 0%, 
+                black ${Math.max(0, percent - 5)}%, 
+                transparent ${percent}%)`;
+    
+              globalLineRef.current.style.webkitMaskImage = mask;
+              globalLineRef.current.style.maskImage = mask;
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
       };
   
-      // 使用 scroll 监听，配合 passive 提升性能
       window.addEventListener("scroll", handleScroll, { passive: true });
-      handleScroll(); // 初始化位置
-  
       return () => {
         observer.disconnect();
         window.removeEventListener("scroll", handleScroll);
@@ -74,30 +76,27 @@ const Experience = () => {
     }, []);
   
     return (
-      <SectionContainer ref={containerRef} id="experience">
+      <SectionContainer ref={containerRef} id="experience" className="overflow-x-hidden">
         <h1 className="heading">
           My <span className="headingWords">work experience</span>
         </h1>
   
         <div className="mt-12 lg:mt-32 relative">
-          {/* 中间进度线容器 */}
-          <div className="obs-actor fade-only absolute top-0 xl:left-1/2 md:left-10 left-5 h-full flex justify-center z-0">
+          <div className="obs-actor fade-only absolute top-0 left-5 md:left-10 xl:left-1/2  h-full flex justify-center z-0">
             {/* 静态背景暗线 */}
-            <div className="w-1 h-full bg-primary" />
-            
+            <div className="w-1 h-full bg-primary/20" />
+
             {/* 动态渐变进度线 */}
-            <div 
-              ref={globalLineRef} 
-              className="gradient-line w-1 h-full absolute top-0" 
-            />
+            <div ref={globalLineRef} className="gradient-line w-1 h-full absolute top-0" />
           </div>
   
-          <div ref={cardsContainerRef} className="relative z-10 xl:space-y-32 space-y-10">
+          {/* 这里的 space-y 加大，给动画留出足够的视觉和计算空间 */}
+          <div ref={cardsContainerRef} className="relative z-10 xl:space-y-40 space-y-20">
             {expCards.map((card, idx) => (
-              <div key={idx} className="flex flex-col xl:flex-row items-start justify-between">
+              <div key={idx} className="exp-card-wrapper relative flex flex-col xl:flex-row items-start justify-between min-h-75">
                 
-                {/* 左侧卡片：滑入 */}
-                <div className="hidden xl:block xl:w-2/5 obs-actor slide-from-left">
+                {/* 左侧卡片 */}
+                <div className="hidden xl:block xl:w-[40%] obs-actor slide-from-left">
                   <GlowElement>
                     <div className="rounded-xl p-10 bg-black-100 border border-black-50 shadow-card">
                       <div className="mb-5 space-y-1">
@@ -110,8 +109,8 @@ const Experience = () => {
                   </GlowElement>
                 </div>
   
-                {/* 右侧区域：Logo 和 文字 */}
-                <div className="xl:w-[calc(50%+40px)] w-full">
+                {/* 右侧区域 */}
+                <div className="xl:w-[calc(50%+38px)] w-full">
                   <div className="flex items-start xl:gap-20 md:gap-10 gap-5 relative z-22">
                     
                     {/* 中间 Logo：原地渐现 */}
@@ -129,20 +128,19 @@ const Experience = () => {
                       <p className="text-blue-50 italic">Key Achievements</p>
                       <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 text-white-50">
                         {card.responsibilities.map((res, i) => (
-                          <li key={i} className="text-lg">{res}</li>
+                          <li key={i} className="text-lg leading-relaxed">{res}</li>
                         ))}
                       </ul>
                     </div>
-  
                   </div>
                 </div>
-  
+
               </div>
             ))}
           </div>
         </div>
       </SectionContainer>
     );
-  };
-  
-  export default Experience;
+};
+
+export default Experience;

@@ -36,6 +36,9 @@ const Navbar = ({}: NavbarProps) => {
     >
       <div className="w-full flex justify-between items-center max-w-8xl mx-auto">
         <Link
+          data-aos="fade-down"
+          data-aos-easing="linear"
+          data-aos-duration="1000"
           href="/"
           className="flex items-center"
           onClick={() => window.scrollTo(0, 0)}
@@ -65,8 +68,11 @@ const Navbar = ({}: NavbarProps) => {
         </Link>
 
         <ul className="list-none hidden sm:flex flex-row gap-10">
-          {navLinks.map((nav) => (
+          {navLinks.map((nav, idx) => (
             <li
+              data-aos="fade-down"
+              data-aos-easing="linear"
+              data-aos-duration={1500 + idx * 500}
               key={nav.id}
               className={`${
                 active === nav.title ? "text-white" : "text-secondary"

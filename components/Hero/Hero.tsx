@@ -16,9 +16,9 @@ const Computer = dynamic(() => import("../Computer"), {
   ),
 });
 
-type HeroProps = object
+type HeroProps = object;
 
-const Hero = ({ }: HeroProps) => {
+const Hero = ({}: HeroProps) => {
   const [readyToLoadModel, setReadyToLoadModel] = useState(false);
 
   useEffect(() => {
@@ -34,12 +34,45 @@ const Hero = ({ }: HeroProps) => {
       <div
         className={`absolute inset-0 top-30 max-w-7xl mx-auto paddingX flex flex-row items-start gap-5`}
       >
-        <div className="flex flex-col justify-center items-center mt-5">
+        <div
+          data-aos="fade-zoom-in"
+          data-aos-easing="ease-in-back"
+          data-aos-delay="300"
+          data-aos-offset="0"
+          data-aos-duration="1500"
+          className="flex flex-col justify-center items-center mt-5"
+        >
           <div className="w-5 h-5 rounded-full bg-[#915EFF]" />
           <div className="w-1 sm:h-80 h-40 violet-gradient" />
         </div>
 
         <div>
+          <div
+            data-aos="fade-zoom-in"
+            data-aos-easing="ease-in-back"
+            data-aos-delay="500"
+            data-aos-offset="0"
+            data-aos-duration="2000"
+            className="heroHeadText text-white"
+          >
+            Hi, I&apos;m <span className="text-[#915EFF]">Zihang</span>
+          </div>
+          <div
+            data-aos="fade-zoom-in"
+            data-aos-easing="ease-in-back"
+            data-aos-delay="500"
+            data-aos-offset="0"
+            data-aos-duration="2500"
+            className={`heroSubText mt-2 text-white-100`}
+          >
+            <div>
+              I develop scalable, high-performance web applications with
+              modular, maintainable frontend architectures.
+            </div>
+          </div>
+        </div>
+
+        {/* <div>
           <TextReveal
             className="heroHeadText text-white"
             staggerDelayMs={60}
@@ -58,10 +91,15 @@ const Hero = ({ }: HeroProps) => {
               modular, maintainable frontend architectures.
             </TextReveal>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div
+        data-aos="fade-zoom-in"
+        data-aos-easing="ease-in-back"
+        data-aos-delay="1000"
+        data-aos-offset="0"
+        data-aos-duration="3000"
         className={`h-2/5 md:h-1/2 lg:[@media_(max-height:820px)]:h-full lg:h-1/2 xl:h-full
         top-1/4 md:top-1/8 lg:[@media_(max-height:820px)]:top-auto lg:top-1/12 xl:top-auto 
         md:bottom-0
@@ -74,7 +112,9 @@ const Hero = ({ }: HeroProps) => {
         <a href="#about">
           <div className="w-9 h-16 rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
             {/* Use CSS animation instead of framer-motion for the bouncing dot */}
-            <div className={`w-3 h-3 rounded-full bg-secondary mb-1 ${styles.bounce}`} />
+            <div
+              className={`w-3 h-3 rounded-full bg-secondary mb-1 ${styles.bounce}`}
+            />
           </div>
         </a>
       </div>

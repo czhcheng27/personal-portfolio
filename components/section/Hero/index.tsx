@@ -8,7 +8,7 @@ const Hero = ({}: HeroProps) => {
   return (
     <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center w-full h-screen">
       <SectionContainer className="mt-0! py-20 h-full bg-[radial-gradient(circle_at_50%_30%,rgba(145,94,255,0.2)_0%,transparent_70%)]">
-        <div className="relative h-full flex flex-col justify-evenly">
+        <div className="relative h-full flex flex-col justify-evenly -mt-8 lg:mt-0">
           {/* text */}
           <div className="w-full h-fit flex gap-4 px-6">
             <div
@@ -30,7 +30,7 @@ const Hero = ({}: HeroProps) => {
                 data-aos-delay="500"
                 data-aos-offset="0"
                 data-aos-duration="2000"
-                className="text-[42px] xs:text-[50px] sm:text-[60px] lg:text-[80px] leading-[1.1] font-black text-white mt-2"
+                className="text-[42px] xs:text-[50px] sm:text-[60px] lg:text-[80px] font-black text-white mt-2"
               >
                 Hi, I&apos;m&nbsp;
                 <span className="bg-linear-to-r from-[#915EFF] via-[#d8b4fe] to-[#915EFF] bg-size-[200%_auto] bg-clip-text text-transparent animate-gradient-flow">

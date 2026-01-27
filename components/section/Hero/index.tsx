@@ -8,7 +8,7 @@ const Hero = ({}: HeroProps) => {
   return (
     <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center w-full h-screen">
       <SectionContainer className="mt-0! py-20 h-full bg-[radial-gradient(circle_at_50%_30%,rgba(145,94,255,0.2)_0%,transparent_70%)]">
-        <div className="relative h-full flex flex-col justify-evenly -mt-8 lg:mt-0">
+        <div className="relative h-full flex flex-col justify-evenly -mt-10 lg:mt-0">
           {/* text */}
           <div className="w-full h-fit flex gap-4 px-6">
             <div

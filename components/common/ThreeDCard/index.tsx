@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 interface ThreeDCardProps {
   children: React.ReactNode;
   className?: string;
+  outterClassName?: string;
   style?: CSSProperties;
   onClick?: () => void;
   /** 3D倾斜强度系数 (默认 1.0) */
@@ -25,6 +26,7 @@ const ThreeDCard = ({
   shadowIntensity = 0.5,
   shineRange = 200,
   hoverScale = 1.05,
+  outterClassName = "",
 }: ThreeDCardProps) => {
   const [cssVars, setCssVars] = useState<Record<string, string>>({});
 
@@ -63,7 +65,7 @@ const ThreeDCard = ({
 
   return (
     <div
-      className={styles.hover3d}
+      className={`${styles.hover3d} ${outterClassName}`}
       style={{
         ...(style as CSSProperties),
         ...(cssVars as unknown as CSSProperties),

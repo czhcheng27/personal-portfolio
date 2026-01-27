@@ -30,9 +30,12 @@ const Hero = ({}: HeroProps) => {
                 data-aos-delay="500"
                 data-aos-offset="0"
                 data-aos-duration="2000"
-                className="text-[52px] xs:text-[50px] sm:text-[60px] lg:text-[80px] leading-[1.1] font-black text-white mt-2"
+                className="text-[42px] xs:text-[50px] sm:text-[60px] lg:text-[80px] leading-[1.1] font-black text-white mt-2"
               >
-                Hi, I&apos;m <span className="text-[#915EFF]">Zihang</span>
+                Hi, I&apos;m&nbsp;
+                <span className="bg-linear-to-r from-[#915EFF] via-[#d8b4fe] to-[#915EFF] bg-size-[200%_auto] bg-clip-text text-transparent animate-gradient-flow">
+                  Zihang
+                </span>
               </div>
               <div
                 data-aos="fade-zoom-in"

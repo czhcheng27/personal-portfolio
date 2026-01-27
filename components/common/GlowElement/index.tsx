@@ -147,35 +147,49 @@ const GlowElement = ({
   };
 
   return (
-    <Tag
-      className={`relative ${isButtonMode ? "h-12" : ""} inline-flex overflow-hidden ${radiusClass} focus:outline-none ${
-        disabled ? "opacity-50 cursor-not-allowed" : ""
-      } ${className}`}
-      onClick={disabled ? undefined : onClick}
-      disabled={disabled}
-      style={{ padding: `${borderWidth}px` }}
-      {...restProps}
-    >
-      {/* 流光背景层 */}
-      <span
-        className="absolute inset-[-1000%]"
-        style={{
-          background: glowGradient,
-          animation: `spin ${glowDuration}s linear infinite`,
-        }}
-      />
+    <>
+      {/* 流光旋转动画定义 */}
+      <style>{`
+        @keyframes glow-spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
 
-      {/* 内容层 */}
-      <span
-        className={`relative inline-flex w-full h-full items-center justify-center ${radiusClass} bg-slate-950 backdrop-blur-3xl ${
-          isButtonMode
-            ? "cursor-pointer px-7 text-sm font-medium text-white gap-2"
-            : ""
-        } ${innerClassName}`}
+      <Tag
+        className={`relative ${isButtonMode ? "h-12" : ""} inline-flex overflow-hidden ${radiusClass} focus:outline-none ${
+          disabled ? "opacity-50 cursor-not-allowed" : ""
+        } ${className}`}
+        onClick={disabled ? undefined : onClick}
+        disabled={disabled}
+        style={{ padding: `${borderWidth}px` }}
+        {...restProps}
       >
-        {renderContent()}
-      </span>
-    </Tag>
+        {/* 流光背景层 */}
+        <span
+          className="absolute inset-[-1000%]"
+          style={{
+            background: glowGradient,
+            animation: `glow-spin ${glowDuration}s linear infinite`,
+          }}
+        />
+
+        {/* 内容层 */}
+        <span
+          className={`relative inline-flex w-full h-full items-center justify-center ${radiusClass} bg-slate-950 backdrop-blur-3xl ${
+            isButtonMode
+              ? "cursor-pointer px-7 text-sm font-medium text-white gap-2"
+              : ""
+          } ${innerClassName}`}
+        >
+          {renderContent()}
+        </span>
+      </Tag>
+    </>
   );
 };
 

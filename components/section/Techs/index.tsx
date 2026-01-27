@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { techStackIcons } from "@/constants";
+import { FadeInUp } from "@/components/common/MotionWrapper";
 import SectionContainer from "../../layout/SectionContainer";
 
 const TechIcon = dynamic(() => import("./TechIcon"), {
@@ -46,7 +47,7 @@ const Techs = () => {
 
       <div className="tech-grid">
         {techStackIcons.map((techStackIcon, idx) => (
-          <div
+          <FadeInUp
             key={idx}
             className="relative card-border tech-card overflow-hidden group rounded-lg"
           >
@@ -66,7 +67,7 @@ const Techs = () => {
                 <p>{techStackIcon.name}</p>
               </div>
             </div>
-          </div>
+          </FadeInUp>
         ))}
       </div>
     </SectionContainer>

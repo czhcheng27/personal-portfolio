@@ -200,7 +200,7 @@
   }
 
   .animate-gradient-flow {
-    animation: gradient-flow 3s linear infinite;
+    animation: gradient-flow 2.5s linear infinite;
     /* 保持 65% 主题色的秘诀：不要让亮色 via 太宽 */
     display: inline-block; /* 确保背景计算准确 */
   }

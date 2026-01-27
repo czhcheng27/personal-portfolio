@@ -1,16 +1,16 @@
+import { FaLocationArrow } from "react-icons/fa6";
 import ComputersCanvas from "@/components/section/Hero/Computer";
 import SectionContainer from "@/components/layout/SectionContainer";
-import GlowElement from "@/components/common/GlowElement";
 
 interface HeroProps {}
 
 const Hero = ({}: HeroProps) => {
   return (
     <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center w-full h-screen">
-      <SectionContainer className="mt-0! py-20 h-full">
+      <SectionContainer className="mt-0! py-20 h-full bg-[radial-gradient(circle_at_50%_30%,rgba(145,94,255,0.2)_0%,transparent_70%)]">
         <div className="relative h-full flex flex-col justify-evenly">
           {/* text */}
-          <div className="w-full h-1/2 lg:h-fit flex gap-4">
+          <div className="w-full h-fit flex gap-4 px-6">
             <div
               data-aos="fade-zoom-in"
               data-aos-easing="ease-in-back"
@@ -20,7 +20,7 @@ const Hero = ({}: HeroProps) => {
               className="flex flex-col items-center pt-5"
             >
               <div className="w-5 h-5 rounded-full bg-[#915EFF]" />
-              <div className="w-1 min-h-40 h-full violet-gradient" />
+              <div className="w-1 h-full violet-gradient" />
             </div>
 
             <div>
@@ -30,7 +30,7 @@ const Hero = ({}: HeroProps) => {
                 data-aos-delay="500"
                 data-aos-offset="0"
                 data-aos-duration="2000"
-                className="text-[40px] xs:text-[50px] sm:text-[60px] lg:text-[80px] font-black text-white mt-2"
+                className="text-[52px] xs:text-[50px] sm:text-[60px] lg:text-[80px] leading-[1.1] font-black text-white mt-2"
               >
                 Hi, I&apos;m <span className="text-[#915EFF]">Zihang</span>
               </div>
@@ -40,14 +40,11 @@ const Hero = ({}: HeroProps) => {
                 data-aos-delay="500"
                 data-aos-offset="0"
                 data-aos-duration="2500"
-                className={`font-medium xs:text-xl sm:text-2xl lg:text-3xl lg:leading-10 mt-2 text-white-100`}
+                className={`font-medium text-lg xs:text-xl sm:text-2xl lg:text-3xl leading-relaxed lg:leading-10 mt-5 text-white-100`}
               >
                 <div>
                   I develop scalable, high-performance web applications with
                   modular, maintainable frontend architectures.
-                </div>
-                <div className="mt-5 lg:hidden">
-                  <GlowElement button>Contact Me</GlowElement>
                 </div>
               </div>
             </div>
@@ -63,6 +60,19 @@ const Hero = ({}: HeroProps) => {
             className="w-full aspect-2/1 xl:[@media_(max-height:736px)]:h-120 xl:[@media_(min-height:737px)_and_(max-height:920px)]:h-150"
           >
             <ComputersCanvas />
+          </div>
+
+          <div
+            data-aos="fade-zoom-in"
+            data-aos-easing="ease-in-back"
+            data-aos-delay="800"
+            data-aos-offset="0"
+            data-aos-duration="2500"
+            className="lg:hidden w-full flex items-center justify-center px-6"
+          >
+            <button className="w-full max-w-xs py-5 bg-[#915EFF] text-white font-bold rounded-2xl shadow-xl shadow-primary/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-lg">
+              Explore My Work <FaLocationArrow />
+            </button>
           </div>
 
           <div

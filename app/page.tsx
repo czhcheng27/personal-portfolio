@@ -36,8 +36,8 @@ export default function Home() {
         <TechStack />
       </LazyLoadSection> */}
 
-      <Experience />
       <Projects />
+      <Experience />
       <TechStack />
     </div>
   );

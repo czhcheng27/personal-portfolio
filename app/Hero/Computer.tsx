@@ -2,7 +2,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
-import CanvasLoader from "../../base/Loader";
+import CanvasLoader from "../../components/base/Loader";
 
 interface ComputersCanvasProps {}
 

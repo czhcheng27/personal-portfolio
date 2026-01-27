@@ -1,20 +1,20 @@
 "use client";
 
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Hero from "@/app/Hero";
+import Projects from "@/app/Projects";
 import LazyLoadSection from "@/components/base/LazyLoadSection";
-import Hero from "@/components/section/Hero";
-import Projects from "@/components/section/Projects";
-import { useEffect } from "react";
 
 // 懒加载非首屏组件，减少首屏负载
-const Experience = dynamic(() => import("@/components/section/Experience"), {
+const Experience = dynamic(() => import("@/app/Experience"), {
   ssr: true,
   loading: () => <div className="min-h-screen" />,
 });
 
-const TechStack = dynamic(() => import("@/components/section/Techs"), {
+const TechStack = dynamic(() => import("@/app/Techs"), {
   ssr: true,
   loading: () => <div className="min-h-screen" />,
 });

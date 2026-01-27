@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { techStackIcons } from "@/constants";
 import { FadeInUp } from "@/components/common/MotionWrapper";
-import SectionContainer from "../../layout/SectionContainer";
+import SectionContainer from "../../components/layout/SectionContainer";
 
 const TechIcon = dynamic(() => import("./TechIcon"), {
   ssr: false,

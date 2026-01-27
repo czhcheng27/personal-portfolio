@@ -1,5 +1,5 @@
 import { FaLocationArrow } from "react-icons/fa6";
-import ComputersCanvas from "@/components/section/Hero/Computer";
+import ComputersCanvas from "@/app/Hero/Computer";
 import SectionContainer from "@/components/layout/SectionContainer";
 
 interface HeroProps {}

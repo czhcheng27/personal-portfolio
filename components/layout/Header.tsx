@@ -31,7 +31,7 @@ const Header = ({}: HeaderProps) => {
 
   return (
     <nav
-      className={`w-full flex items-center px-4 sm:px-6 md:px-12 py-5 fixed top-0 inset-x-0 z-9999 transition-colors duration-300 ${scrolled ? "bg-primary/95 shadow-lg backdrop-blur-sm" : "bg-transparent"}`}
+      className={`w-full flex items-center px-4 sm:px-6 md:px-12 py-5 fixed top-0 inset-x-0 z-9999 transition-colors duration-300 ${scrolled ? "shadow-lg backdrop-blur-sm" : "bg-transparent"}`}
       style={{ willChange: scrolled ? "auto" : "transform" }}
     >
       <div className="w-full flex justify-between items-center max-w-8xl mx-auto">

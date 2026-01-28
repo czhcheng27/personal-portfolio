@@ -1,6 +1,6 @@
 export default function HeroPattern() {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none hero-pattern">
+    <div className="fixed inset-0 z-0 pointer-events-none bg-[linear-gradient(to_right,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0.3)_15%,transparent_40%,transparent_60%,rgba(0,0,0,0.3)_85%,rgba(0,0,0,0.6)_100%)]">
       <svg
         className="absolute inset-0 w-full h-full opacity-30 dark:opacity-50"
         preserveAspectRatio="none"

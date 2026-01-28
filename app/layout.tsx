@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-background-dark antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-primary bg-linear-to-b from-primary to-[#1c1544] antialiased`}
       >
         <HeroPattern />
         <Header />

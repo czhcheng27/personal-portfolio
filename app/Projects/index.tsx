@@ -26,7 +26,7 @@ const Projects = () => {
               <StaggerItem key={id} animateIndex={index % columns}>
                 <ThreeDCard
                   outterClassName="h-full w-full"
-                  className="h-full flex flex-col card-bg card-border p-5 rounded-2xl overflow-hidden"
+                  className="h-full flex flex-col bg-[#1f174e] p-5 rounded-2xl overflow-hidden"
                 >
                   {/* top */}
                   <div className="relative">

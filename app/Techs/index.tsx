@@ -49,7 +49,7 @@ const Techs = () => {
         {techStackIcons.map((techStackIcon, idx) => (
           <FadeInUp
             key={idx}
-            className="relative card-border tech-card overflow-hidden group rounded-lg"
+            className="relative tech-card overflow-hidden group rounded-lg"
           >
             <div className="tech-card-animated-bg" />
             <div className="tech-card-content">

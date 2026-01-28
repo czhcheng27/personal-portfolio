@@ -9,9 +9,9 @@ interface FooterProps {}
 
 const Footer = ({}: FooterProps) => {
   return (
-    <SectionContainer className="relative z-50 w-full mt-12 bg-background-light dark:bg-background-dark/80 backdrop-blur-xl                         footer-pattern overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
-      <div className="relative z-10 max-w-screen-2xl mx-auto px-10 py-8 md:py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <SectionContainer className="relative z-50 w-full mt-0! dark:bg-background-dark/80 backdrop-blur-xl footer-pattern overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-[#915EFF]/50 to-transparent z-10"></div>
+      <div className="relative bg-[#050816] max-w-screen-2xl mx-auto px-10 py-8 md:py-10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="">
           <span className="text-white font-bold mr-2">Zihang Cheng</span>
           <span className="text-[11px] uppercase tracking-widest text-slate-400 dark:text-slate-600 mt-1 font-semibold">

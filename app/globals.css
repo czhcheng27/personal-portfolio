@@ -4,6 +4,7 @@
   /* Custom colors from old v3 config */
   --color-primary: #050816;
   --color-secondary: #aaa6c3;
+  --color-background-dark: #050816;
   --color-tertiary: #151030;
   --color-white-50: #d9ecff;
   --color-white-100: #f3f3f3;
@@ -31,6 +32,15 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
     color-scheme: dark;
+  }
+
+  /* Hero pattern background */
+  .hero-pattern {
+    background-image: radial-gradient(
+      circle at 50% 30%,
+      rgba(145, 94, 255, 0.2) 0%,
+      transparent 70%
+    );
   }
 
   body {
@@ -72,10 +82,6 @@
 
   .headingWords {
     @apply text-[#915EFF];
-  }
-
-  .card-border {
-    @apply border border-black-50 bg-black-100;
   }
 
   .card-bg {
